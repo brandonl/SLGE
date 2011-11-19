@@ -25,10 +25,10 @@ namespace slge
 			void draw() const;
 			float get_width() const;
 			float get_height() const;
+			b2Vec2 center;
 
 		private:
 			std::string text;
-			b2Vec2 center;
 			rect aabb;
 			font *typography;
 			std::vector<vertex> vertices;
