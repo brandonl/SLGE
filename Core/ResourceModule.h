@@ -1,10 +1,6 @@
 #ifndef RESOURCE_MODULE_H
 #define RESOURCE_MODULE_H
 
-#if defined(_MSC_VER)&&(_MSC_VER>=1200)
-#pragma once
-#endif
-
 #include <map>
 #include "Font.h"
 #include "Texture.h"
@@ -12,7 +8,7 @@
 
 namespace slge
 {
-	class Resources : public uncopyable
+	class Resources : public Uncopyable
 	{
 		public:
 			explicit Resources();

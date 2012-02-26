@@ -100,6 +100,6 @@ glm::vec2 Input::getMousePosition()
 glm::vec2 Input::getMousePercentage()
 {
 	return glm::vec2( 	instance->mousePosition.x / Window::getWidth(),
-					instance->mousePosition.y / Window::getHeight() );
+											instance->mousePosition.y / Window::getHeight() );
 }
 

@@ -5,21 +5,18 @@
 
 namespace slge
 {
-
-	static const unsigned int MAX_KEYS  = 322;
-	static const unsigned int MAX_MOUSE_BUTTONS  = 10;
-	//! \class Input
-	//! \brief As name suggests: Manages game Input including key evens and mouse events.
-	//!
 	class Input
 	{
+		static const unsigned int MAX_KEYS  = 322;
+		static const unsigned int MAX_MOUSE_BUTTONS  = 10;
+
 		public:
-			explicit Input();
+			Input();
 			~Input();
 			void init();
 			static void update();
 
-			/**		Keys API	**/
+	
 			//! \brief Handles registering key events from the glfw callback
 			//! \param int keycode, int action ( 0:pressed, 1:released)
 			static void keyEvent( int, int );
@@ -30,7 +27,7 @@ namespace slge
 			//! \brief Has the key been released in the current frame.
 			static bool isKeyReleased( int );
 
-			/** 	Mouse API	**/
+
 			//! \brief Handles registering mouse Button events from the glfw callback
 			//! \param int keycode, int action ( 0:pressed, 1:released)
 			static void mouseDownEvent( int, int );
@@ -64,7 +61,7 @@ namespace slge
 			bool mouseButtonEvents[MAX_MOUSE_BUTTONS];
 
 		public:
-			enum Terminal
+			enum
 			{
 				NO_TERMINAL = -1,
 				ESC = 257,
@@ -128,7 +125,8 @@ namespace slge
 				SCROLL_LOCK,
 				PAUSE
 			};
-			enum MouseTerminal
+
+			enum
 			{
 				MOUSE_LEFT = 0,
 				MOUSE_RIGHT,

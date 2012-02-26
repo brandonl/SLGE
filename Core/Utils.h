@@ -8,15 +8,15 @@
 #include <iostream>
 #include <algorithm>
 
-class uncopyable
+class Uncopyable
 {
 	protected:
-		uncopyable() {}
-		~uncopyable() {}
+		Uncopyable() {}
+		~Uncopyable() {}
 
 	private:
-		uncopyable(const uncopyable&);
-		const uncopyable& operator=(const uncopyable&);
+		Uncopyable(const Uncopyable&);
+		const Uncopyable& operator=(const Uncopyable&);
 };
 
 struct deleteMapFunctor

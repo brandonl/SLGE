@@ -8,7 +8,7 @@ namespace slge
 	class Window
 	{
 		public:
-			explicit Window();
+			Window();
 			~Window();
 			void init( const std::string& , int, int, int, int );
 
@@ -31,6 +31,8 @@ namespace slge
 			int cdepth;
 			int zbdepth;
 			float ratio;
+
+			static void windowResize( int width, int height );
 
 			static Window *instance;
 			static void keyEventCallback( int, int );

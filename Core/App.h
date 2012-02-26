@@ -1,10 +1,6 @@
 #ifndef APP_H
 #define APP_H
 
-#if defined(_MSC_VER)&&(_MSC_VER>=1200)
-#pragma once
-#endif
-
 #include "Window.h"
 #include "Input.h"
 #include "Scene.h"
@@ -18,7 +14,7 @@ namespace slge
 	class App
 	{
 		public:
-			explicit App();
+			App();
 			~App();
 
 			void run();
@@ -27,10 +23,10 @@ namespace slge
 
 		private:
 			void quit();
-			Window windowSingleton;
-			Input inputSingleton;
-			World worldSingleton;
-			Resources resourcesSingleton;
+			Window window;
+			Input input;
+			World world;
+			Resources resources;
 			bool running;
 	};
 };

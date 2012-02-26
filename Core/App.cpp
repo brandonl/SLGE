@@ -15,10 +15,10 @@ App::~App()
 
 void App::init( const std::string& name, unsigned int width, unsigned int height  )
 {
-	windowSingleton.init( name, width, height, 32, 24 );
-	inputSingleton.init();
-	worldSingleton.init();
-	resourcesSingleton.init();
+	window.init( name, width, height, 32, 24 );
+	input.init();
+	world.init();
+	resources.init();
 }
 
 void getFPS()
@@ -58,7 +58,7 @@ void App::run()
 		if( timeSinceLastUpdate >= DELTA_TIME )
 		{
 			Input::update();
-			if( Input::isKeyPressed( 257 ) )
+			if( Input::isKeyPressed( Input::ESC ) )
 				quit();
 			if( Input::isKeyPressed( 'D' ) )
 			{

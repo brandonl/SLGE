@@ -49,15 +49,19 @@ void Window::init( const std::string& ntitle, int w, int h, int cdepth, int zdep
 	// Disable polling on swap buffers; we will call on our own terms.
 	glfwDisable( GLFW_AUTO_POLL_EVENTS );
 	glfwEnable( GLFW_KEY_REPEAT );
+	glfwOpenWindowHint( GLFW_WINDOW_NO_RESIZE, GL_TRUE );
+
+	glfwSetKeyCallback( keyEventCallback );
+	glfwSetMouseButtonCallback( mouseButtonCallback );
+	glfwSetMousePosCallback( mousePositionCallBack );
+
+	glfwSetWindowSizeCallback( windowResize );
 
 	if( height == 0 )
 		height = 1;
 
 	glViewport( 0, 0, width, height );
 
-	glfwSetKeyCallback( keyEventCallback );
-	glfwSetMouseButtonCallback( mouseButtonCallback );
-	glfwSetMousePosCallback( mousePositionCallBack );
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -73,16 +77,17 @@ void Window::init( const std::string& ntitle, int w, int h, int cdepth, int zdep
 	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 }
 
+
+void Window::windowResize( int w, int h )
+{
+	instance->width = w;
+	instance->height = h;
+
+	glViewport( 0, 0, instance->width, instance->height );
+}
+
 void Window::update()
 {
-	int lastWidth = instance->width;
-	int lastHeight = instance->height;
-
-	glfwGetWindowSize( &instance->width, &instance->height );
-
-	if( lastWidth != instance->width || lastHeight != instance->height )
-		glViewport( 0, 0, instance->width, instance->height );
-
 	glfwPollEvents();
 }
 
