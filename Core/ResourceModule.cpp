@@ -11,6 +11,7 @@ Resources::Resources()
 		std::cerr << "Only one Resource module allowed.\n";;
 
 	instance = this;
+	workingDirectory =  "../../Resources/";
 }
 
 Resources::~Resources()
@@ -19,17 +20,12 @@ Resources::~Resources()
 	resourceMap.clear();
 }
 
-void Resources::init()
-{
-	setWorkingDir();
-}
-
 void Resources::setWorkingDir( const std::string& dir )
 {
 	instance->workingDirectory = dir;
 }
 
-Texture* Resources::grabTexture( const std::string& filename )
+ResPtr* Resources::grab( const std::string& filename )
 {
 	if( filename.empty() )
 	{
@@ -63,66 +59,6 @@ Texture* Resources::grabTexture( const std::string& filename )
 
 	//else
 	//	std::cout << "Resource is already cached with filename: " << filename << std::endl;
-
-	return res;
-}
-
-Font* Resources::grabFont(	const std::string &filename, float pixelHeight, int texWidth, int texHeight )
-{
-	if( filename.empty() )
-	{
-		std::cerr << "The Resource with filename: " << filename << " does not exist.\n";
-		return 0;
-	}
-
-	std::string filenameAndPath = instance->workingDirectory + filename;
-
-	Font *res = static_cast<Font*>( instance->requestFromFilename( filenameAndPath ) );
-
-	if( !res )
-	{
-		res = new Font();
-		if( !res->load( filenameAndPath, pixelHeight, texWidth, texHeight ) )
-		{
-			std::cerr << "Failed to load Resource with filename " << filename << std::endl;;
-			delete res;
-			res = 0;
-			return 0;
-		}
-
-		if( !instance->add( res ) )
-		{
-			std::cerr << "Failed to add Resource to cache with filename: " << filename << std::endl;
-			return 0;
-		}
-		//else
-		//	std::cout << "Resource added with filename: " << filename << std::endl;
-	}
-
-	else
-	{
-		if( res->pixelHeight == pixelHeight )
-			std::cerr << "Resource is already cached with filename: " << filename << std::endl;
-		else
-		{
-			res = new Font();
-			if( !res->load( filenameAndPath, pixelHeight, texWidth, texHeight ) )
-			{
-				std::cerr << "Failed to load Resource with filename " << filename << std::endl;;
-				delete res;
-				res = 0;
-				return 0;
-			}
-
-			if( !instance->add( res ) )
-			{
-				std::cerr << "Failed to add Resource to cache with filename: " << filename << std::endl;
-				return 0;
-			}
-			//else
-			//	std::cout << "Resource added with filename: " << filename << " and pixel size: " << res->pixelHeight << std::endl;
-		}
-	}
 
 	return res;
 }

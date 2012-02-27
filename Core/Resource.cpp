@@ -3,4 +3,4 @@
 
 using namespace slge;
 
-Resource::~Resource() {};
+Resource::~Resource() { std::cout << "Deleting resource\n"; };

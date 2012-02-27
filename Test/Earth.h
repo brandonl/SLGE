@@ -43,12 +43,12 @@ class Wall : public Actor
 			body->CreateFixture(&myFixtureDef);
 		}
 
-		~Wall() { std::cout << "Destroying Wall... " << id << std::endl;};
-		void draw() {};
+		~Wall() { std::cout << "Destroying Wall... " << id << std::endl;}
+		void draw() {}
 		void update()
 		{
-		};
-		void onCollission( Entity *collider ) {};
+		}
+		void onCollission( Entity *collider ) {}
 };
 
 class home : public Scene
