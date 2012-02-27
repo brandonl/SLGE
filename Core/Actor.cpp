@@ -15,6 +15,11 @@ Actor::~Actor()
 {
 }
 
+void Actor::update()
+{
+	graphic->update();
+}
+
 void Actor::draw() const
 {
 	if( graphic.get() )
@@ -24,11 +29,6 @@ void Actor::draw() const
 		graphic->draw();
 		glPopMatrix();
 	}
-}
-
-void Actor::update()
-{
-	graphic->update();
 }
 
 const b2Vec2& Actor::getPos() const

@@ -30,10 +30,10 @@ namespace slge
 			virtual void doDraw();
 
 		private:
-			unsigned entityIdCounter;
-			b2World stage;
-			unsigned drawLayer;
-			DebugDraw debugDraw;
+			unsigned		entityIdCounter;
+			b2World		stage;
+			unsigned		drawLayer;
+			DebugDraw	debugDraw;
 			std::vector< std::unique_ptr<Entity> > entities;
 
 		public:
