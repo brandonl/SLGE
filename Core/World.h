@@ -7,10 +7,8 @@
 #include "Render.h"
 #include <list>
 
-
 namespace slge
 {
-	static const float DELTA_TIME = 1.0f/60.0f;
 	class World : public b2ContactListener
 	{
 		public:

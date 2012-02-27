@@ -1,11 +1,10 @@
 #include "Render.h"
-#include <cstdio>
-#include <cstdarg>
-#include <cstring>
 #include <Windows.h>
 #include <gl/GL.h>
+#include "Defines.h"
 
 using namespace std;
+using namespace slge;
 
 void DebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& Color)
 {

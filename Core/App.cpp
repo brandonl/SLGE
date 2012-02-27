@@ -2,10 +2,11 @@
 #include <iostream>
 #include "World.h"
 #include <sstream>
+#include "Defines.h"
 
 using namespace slge;
 
-App::App() : running(true)
+App::App() 
 {
 }
 
@@ -13,12 +14,12 @@ App::~App()
 {
 }
 
-void App::init( const std::string& name, unsigned int width, unsigned int height  )
+void App::init( const std::string&& name, unsigned && width, unsigned&& height  )
 {
 	window.init( name, width, height, 32, 24 );
 	input.init();
-	world.init();
 	resources.init();
+	scene->init();
 }
 
 void getFPS()
@@ -47,9 +48,9 @@ void App::run()
 	bool debug = false;
 	double lastTick = Window::tick();
 	double timeSinceLastUpdate = 0.0;
-    bool appIsRunning = true;
+   bool appIsRunning = true;
 
-	while( running && Window::isOpen() )
+	while( appIsRunning && Window::isOpen() )
 	{
         Window::update();
 
@@ -58,31 +59,23 @@ void App::run()
 		if( timeSinceLastUpdate >= DELTA_TIME )
 		{
 			Input::update();
+
 			if( Input::isKeyPressed( Input::ESC ) )
-				quit();
+				appIsRunning = false;
+
 			if( Input::isKeyPressed( 'D' ) )
 			{
 				debug = ( !debug ? true : false );
-				World::changeLayer( (debug ? 1 : 0 ) );
+				scene->changeLayer( ( debug ? Scene::debug : Scene::noDebug ) );
 			}
-			World::update();
+
+			scene->update();
 			timeSinceLastUpdate = 0;
 		}
 
 		Window::clear();
-		World::draw();
+		scene->draw();
 		Window::swapBuffers();
 		getFPS();
 	}
-}
-
-
-void App::quit()
-{
-	running = false;
-}
-
-void App::set( Scene* s )
-{
-	World::changeScene( s );
 }

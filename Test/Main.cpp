@@ -9,12 +9,14 @@ using namespace slge;
 int main()
 {
 	App env;
-	env.init( "SLGE", 480, 640 );
-	std::cout << "Inited app..." << std::endl;
-
 	env.set( new home() );
 	std::cout << "Set Scene..." << std::endl;
 
+	// This order MUST be maintained.
+	// Initializing app must take place after scene.
+	// TODO: Create Macro to aid in this invariant.
+	env.init( std::string( "SLGE" ), 480u, 640u );
+	std::cout << "Inited app..." << std::endl;
 	env.run();
 	std::cout << "Game Exited" << std::endl;
 	return 0;

@@ -2,10 +2,11 @@
 #define WINDOW_H
 
 #include <string>
+#include "Utils.h"
 
 namespace slge
 {
-	class Window
+	class Window : private Uncopyable
 	{
 		public:
 			Window();
@@ -21,8 +22,12 @@ namespace slge
 			static float	getAspectRatio();
 			static double	tick();
 			static void		setTitle( const std::string& );
-			static void		center();
-			static int		*displaySize();
+
+		private:
+			static Window *instance;
+			static void windowResize( int width, int height );
+			static void	center();
+			static int *displaySize();
 
 		private:
 			std::string title;
@@ -31,13 +36,6 @@ namespace slge
 			int cdepth;
 			int zbdepth;
 			float ratio;
-
-			static void windowResize( int width, int height );
-
-			static Window *instance;
-			static void keyEventCallback( int, int );
-			static void mouseButtonCallback( int, int );
-			static void mousePositionCallBack( int, int );
 	};
 
 };

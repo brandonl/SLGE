@@ -13,7 +13,7 @@ namespace slge
 {
 	struct Vertex
 	{
-		explicit Vertex();
+		Vertex();
 		explicit Vertex( float x, float y, float u, float v, const Color& col = Color() );
 
 		GLfloat position[2];

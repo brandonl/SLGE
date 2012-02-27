@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <vector>
 
 class Uncopyable
 {
@@ -18,6 +19,13 @@ class Uncopyable
 		Uncopyable(const Uncopyable&);
 		const Uncopyable& operator=(const Uncopyable&);
 };
+
+template<typename T>
+void eraseUnordered( std::vector<T>& v, size_t index)
+{
+    v[index] = std::move( v.back() );
+    v.pop_back();
+}
 
 struct deleteMapFunctor
 {
@@ -46,5 +54,4 @@ struct printFunctor
 		std::cout << T << std::endl;
 	}
 };
-
 #endif

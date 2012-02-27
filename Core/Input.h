@@ -2,10 +2,11 @@
 #define INPUT_H
 
 #include <glm/glm.hpp>
+#include "Utils.h"
 
 namespace slge
 {
-	class Input
+	class Input : private Uncopyable
 	{
 		static const unsigned int MAX_KEYS  = 322;
 		static const unsigned int MAX_MOUSE_BUTTONS  = 10;
@@ -16,10 +17,6 @@ namespace slge
 			void init();
 			static void update();
 
-	
-			//! \brief Handles registering key events from the glfw callback
-			//! \param int keycode, int action ( 0:pressed, 1:released)
-			static void keyEvent( int, int );
 			//! \brief Is the key currently being held.
 			static bool isKeyHeld( int );
 			//! \brief Has the key been pressed in the current frame (Press then release).
@@ -27,13 +24,6 @@ namespace slge
 			//! \brief Has the key been released in the current frame.
 			static bool isKeyReleased( int );
 
-
-			//! \brief Handles registering mouse Button events from the glfw callback
-			//! \param int keycode, int action ( 0:pressed, 1:released)
-			static void mouseDownEvent( int, int );
-			//! \brief Handles registering mouse movement events from the glfw callback
-			//! \param int x horizontal position of the mouse, int y vertical position of the mouse.
-			static void mouseMoveEvent( int, int );
 			//! \brief Is the mouse Button key currently being held.
 			static bool isMouseButtonHeld( int );
 			//! \brief Has the mouse Button been pressed in the current frame (Press then release).
@@ -44,6 +34,17 @@ namespace slge
 			static glm::vec2 getMousePosition();
 			//! \brief Return the x and y percentage of the mouse position 0.0 - 1.0
 			static glm::vec2 getMousePercentage();
+
+		private:
+			//! \brief Handles registering key events from the glfw callback
+			//! \param int keycode, int action ( 0:pressed, 1:released)
+			static void keyEvent( int, int );
+			//! \brief Handles registering mouse Button events from the glfw callback
+			//! \param int keycode, int action ( 0:pressed, 1:released)
+			static void mouseDownEvent( int, int );
+			//! \brief Handles registering mouse movement events from the glfw callback
+			//! \param int x horizontal position of the mouse, int y vertical position of the mouse.
+			static void mouseMoveEvent( int, int );
 
 		private:
 			static Input *instance;

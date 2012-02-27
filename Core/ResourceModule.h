@@ -8,7 +8,7 @@
 
 namespace slge
 {
-	class Resources : public Uncopyable
+	class Resources : private Uncopyable
 	{
 		public:
 			explicit Resources();

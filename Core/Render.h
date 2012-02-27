@@ -1,17 +1,11 @@
 #ifndef RENDER_H
 #define RENDER_H
 
-#if defined(_MSC_VER)&&(_MSC_VER>=1200)
-#pragma once
-#endif
-
 //---------------------------------------------------------------
 // Debug Draw Callback functions from Box2D Test Bench
 ////////////////////////////////////////////////////////////////
 
 #include <Box2D.h>
-
-static const float PTM_RATIO = 32.0f;
 
 class DebugDraw : public b2Draw
 {

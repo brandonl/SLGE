@@ -1,11 +1,19 @@
 #include "Scene.h"
 #include "Entity.h"
+#include <algorithm>
+#include <iostream>
+#include "Utils.h"
 
 using namespace slge;
 
 Scene::Scene()
-	:	entityIdCounter(0)
+	:	entityIdCounter(0),
+		stage( b2World( b2Vec2( 0.0f, 9.8f ) ) ),
+		drawLayer(noDebug)
 {
+	debugDraw.SetFlags( b2Draw::e_shapeBit );
+	stage.SetDebugDraw( &debugDraw );
+	stage.SetContactListener(this);
 	std::cout << "Creating Scene..." << this << std::endl;
 }
 
@@ -14,28 +22,20 @@ Scene::~Scene()
 	std::cout << "Destroying Scene..." << this << std::endl;
 }
 
-void Scene::update()
-{
-	for( auto cit = entities.begin(); cit != entities.end(); ++cit )
-	{
-		if( (*cit)->condemned == true )
-			cit = entities.erase( cit );
-	}
-
-	for( auto cit = entities.begin(); cit != entities.end(); ++cit )
-		(*cit)->update();
-}
-
-void Scene::draw()
-{
-	for( auto cit = entities.cbegin(); cit != entities.cend(); ++cit )
-		(*cit)->draw();
-}
-
 void Scene::add( Entity *ent )
 {
 	ent->id = entityIdCounter++;
-	std::cout << "Creating " << ent->tag << " with id " << ent->id << std::endl;
-	entities.push_back( std::shared_ptr<Entity>( ent ));
+	entities.emplace_back( std::unique_ptr<Entity>( ent ) );
 }
 
+void Scene::doUpdate()
+{
+	std::for_each( entities.begin(), entities.end(),
+						[]( std::unique_ptr<Entity>& e ){ e->update(); } );
+}
+
+void Scene::doDraw()
+{
+		std::for_each( entities.begin(), entities.end(),
+							[]( std::unique_ptr<Entity>& e ){ e->draw(); } );
+}

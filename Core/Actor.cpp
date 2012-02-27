@@ -1,6 +1,7 @@
 #include "Actor.h"
 #include "World.h"
 #include <iostream>
+#include "Defines.h"
 
 using namespace slge;
 

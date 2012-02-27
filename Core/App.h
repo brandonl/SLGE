@@ -7,27 +7,30 @@
 #include "World.h"
 #include <string>
 #include "ResourceModule.h"
+#include "Utils.h"
 
 namespace slge
 {
-
-	class App
+	class App : private Uncopyable
 	{
 		public:
 			App();
 			~App();
 
 			void run();
-			void init( const std::string& name, unsigned int width, unsigned int height );
-			void set( Scene* );
-
+			void init( const std::string&& name, unsigned&& width, unsigned&& height );
+			void set( Scene* scene );
+	
 		private:
-			void quit();
 			Window window;
 			Input input;
-			World world;
 			Resources resources;
-			bool running;
+			std::unique_ptr<Scene> scene;
 	};
+
+	inline void App::set( Scene* s )
+	{
+		scene.reset( s );
+	}
 };
 #endif

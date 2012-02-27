@@ -2,7 +2,6 @@
 #include <GL/glfw.h>
 #include "Window.h"
 #include <iostream>
-#include "Input.h"
 
 using namespace slge;
 
@@ -29,7 +28,7 @@ void Window::init( const std::string& ntitle, int w, int h, int cdepth, int zdep
 	height = h;
 	cdepth = cdepth;
 	zbdepth = zdepth;
-	ratio = ( (GLfloat)width / height );
+	ratio = ( static_cast<GLfloat>( width ) / height );
 
 	if( !glfwInit() )
 		std::cerr <<  "GLFW Error: Failed to initialize GLFW" << std::endl;
@@ -37,12 +36,12 @@ void Window::init( const std::string& ntitle, int w, int h, int cdepth, int zdep
 	int bitsPerColor = cdepth / 4;
 
 	if( !glfwOpenWindow( 	width, height,
-							bitsPerColor, bitsPerColor, bitsPerColor, bitsPerColor,
-							zbdepth, 0,
-							GLFW_WINDOW ) )
+									bitsPerColor, bitsPerColor, bitsPerColor, bitsPerColor,
+									zbdepth, 0,
+									GLFW_WINDOW ) )
 		std::cerr <<  "GLFW Error:  Failed to open GL Context Window"<< std::endl;
 
-	center();
+	this->center();
 
 	glfwSetWindowTitle( title.c_str() );
 
@@ -50,18 +49,14 @@ void Window::init( const std::string& ntitle, int w, int h, int cdepth, int zdep
 	glfwDisable( GLFW_AUTO_POLL_EVENTS );
 	glfwEnable( GLFW_KEY_REPEAT );
 	glfwOpenWindowHint( GLFW_WINDOW_NO_RESIZE, GL_TRUE );
-
-	glfwSetKeyCallback( keyEventCallback );
-	glfwSetMouseButtonCallback( mouseButtonCallback );
-	glfwSetMousePosCallback( mousePositionCallBack );
-
 	glfwSetWindowSizeCallback( windowResize );
 
+	//OpenGL Immediate mode set-up
+	//TODO: Remove when OGL3 Core
 	if( height == 0 )
 		height = 1;
 
 	glViewport( 0, 0, width, height );
-
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -145,19 +140,4 @@ int *Window::displaySize()
 	glfwGetDesktopMode( &desktopResolution );
 	static int displaySize[2] = { desktopResolution.Width, desktopResolution.Height };
 	return displaySize;
-}
-
-void Window::keyEventCallback( int key, int action )
-{
-	Input::keyEvent( key, action );
-}
-
-void Window::mousePositionCallBack( int x, int y )
-{
-	Input::mouseMoveEvent( x, y );
-}
-
-void Window::mouseButtonCallback( int Button, int action )
-{
-	Input::mouseDownEvent( Button, action );
 }

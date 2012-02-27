@@ -16,6 +16,9 @@
     <Filter Include="Core">
       <UniqueIdentifier>{db12dbea-45ea-48a5-80c9-1d955a3ebdcc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Platform">
+      <UniqueIdentifier>{dc857f92-0a88-4eae-b556-fc98f92ef03f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Actor.cpp">
@@ -30,13 +33,7 @@
     <ClCompile Include="Core\Color.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Entity.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Font.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Input.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\Label.cpp">
@@ -63,14 +60,14 @@
     <ClCompile Include="Core\Vertex.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Window.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\World.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Test\Main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Window.cpp">
+      <Filter>Core\Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Input.cpp">
+      <Filter>Core\Platform</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -90,9 +87,6 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\Font.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Input.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\Label.h">
@@ -125,14 +119,17 @@
     <ClInclude Include="Core\Vertex.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Window.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\World.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Test\Earth.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Defines.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Window.h">
+      <Filter>Core\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Input.h">
+      <Filter>Core\Platform</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

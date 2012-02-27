@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Input.h"
-#include "Window.h"
+#define GLFW_NO_GLU
+#include <GL/glfw.h>
 
 using namespace slge;
 
@@ -19,6 +20,10 @@ Input::~Input()
 
 void Input::init()
 {
+	glfwSetKeyCallback( keyEvent );
+	glfwSetMouseButtonCallback( mouseDownEvent );
+	glfwSetMousePosCallback( mouseMoveEvent );
+
 	for( unsigned int i = 0; i < MAX_KEYS; ++i )
 		prevKeyEvents[i] = currKeyEvents[i] = keyEvents[i] = false;
 
@@ -99,7 +104,9 @@ glm::vec2 Input::getMousePosition()
 
 glm::vec2 Input::getMousePercentage()
 {
-	return glm::vec2( 	instance->mousePosition.x / Window::getWidth(),
-											instance->mousePosition.y / Window::getHeight() );
+	int w = 0, h = 0;
+	glfwGetWindowSize( &w, &h );
+	return glm::vec2( instance->mousePosition.x / w,
+							instance->mousePosition.y / h );
 }
 

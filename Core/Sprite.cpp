@@ -1,6 +1,7 @@
 #include "Sprite.h"
 #include <iostream>
 #include "World.h"
+#include "Defines.h"
 
 using namespace slge;
 

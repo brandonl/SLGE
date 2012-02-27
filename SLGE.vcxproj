@@ -90,7 +90,6 @@
     <ClCompile Include="Core\App.cpp" />
     <ClCompile Include="Core\Button.cpp" />
     <ClCompile Include="Core\Color.cpp" />
-    <ClCompile Include="Core\Entity.cpp" />
     <ClCompile Include="Core\Font.cpp" />
     <ClCompile Include="Core\Input.cpp" />
     <ClCompile Include="Core\Label.cpp" />
@@ -102,7 +101,6 @@
     <ClCompile Include="Core\Texture.cpp" />
     <ClCompile Include="Core\Vertex.cpp" />
     <ClCompile Include="Core\Window.cpp" />
-    <ClCompile Include="Core\World.cpp" />
     <ClCompile Include="Test\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +108,7 @@
     <ClInclude Include="Core\App.h" />
     <ClInclude Include="Core\Button.h" />
     <ClInclude Include="Core\Color.h" />
+    <ClInclude Include="Core\Defines.h" />
     <ClInclude Include="Core\Entity.h" />
     <ClInclude Include="Core\Font.h" />
     <ClInclude Include="Core\Input.h" />
@@ -124,7 +123,6 @@
     <ClInclude Include="Core\Utils.h" />
     <ClInclude Include="Core\Vertex.h" />
     <ClInclude Include="Core\Window.h" />
-    <ClInclude Include="Core\World.h" />
     <ClInclude Include="Test\Earth.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,10 +1,6 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#if defined(_MSC_VER)&&(_MSC_VER>=1200)
-#pragma once
-#endif
-
 #include <string>
 #include <iostream>
 #include <Box2D.h>
@@ -16,9 +12,11 @@ namespace slge
 	class Entity
 	{
 		public:
-			explicit Entity() {};
-			explicit Entity( const std::string tag ) : tag(tag), condemned(false) {};
-			virtual ~Entity() = 0;
+			explicit Entity( const std::string tag = "" ) : tag(tag), condemned(false) 
+			{
+				std::cout << "Create entity: " << tag << std::endl;
+			};
+			virtual ~Entity() { std::cout << "Destroying entity\n"; };
 
 			virtual void update() = 0;
 			virtual void draw() const = 0;
