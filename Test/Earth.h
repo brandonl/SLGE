@@ -1,14 +1,15 @@
 #ifndef TEST_H
 #define TEST_H
 
-#include "Scene.h"
-#include "World.h"
-#include "Window.h"
-#include <Box2D.h>
-#include <ctime>
-#include "Resourcemodule.h"
-#include "Defines.h"
 #include <functional>
+#include <ctime>
+#include <cstdio>
+#include <Box2D.h>
+
+#include "Scene.h"
+#include "Window.h"
+#include "Resourcemodule.h"
+#include "Settings.h"
 
 using namespace slge;
 
@@ -50,20 +51,24 @@ class Wall : public Actor
 */
 
 #include "ImageRef.h"
+#include "FontRef.h"
+#include "Text2D.h"
+#include "Texture.h"
 
-class home : public Scene
+class Home : public Scene
 {
 	public:
-		home()
-			:	ref( ImageRef( "Bcomet.tga" ) )
-		{
-		}
-
-		~home()  {}
+		Home()
+			:	iref( "Ogmo.png" ),
+				fref( "ProggySquare.ttf" )
+		{}
 
 	private:
 		void doInit()
 		{
+			t.load( ImageRef("Earthling.png") );
+			t.load( iref );
+			label.load( fref );
 			//leftBound = new Wall( glm::vec2( 0, 0 ), glm::vec2( 0, Window::getHeight() ), std::bind( &Scene::createBody, this, std::placeholders::_1 ) );
 			//title = Label( "THE MOON ISA", Resources::grabFont( "ProggySquare.ttf", 36.0f ), glm::vec2( Window::getWidth() >> 1, 25.0f ),  Color::purple );
 		}
@@ -75,11 +80,15 @@ class home : public Scene
 		void doDraw()
 		{
 			Scene::doDraw();
+			label.draw( "Random" );
 			//title.draw();
 		}
 
 	private:
-		ImageRef ref;
+		Texture t;
+		Text2 label;
+		ImageRef iref;
+		FontRef fref;
 		//Label title;
 		//Wall *leftBound;
 };

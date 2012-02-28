@@ -7,14 +7,22 @@ namespace slge
 {
 	class Resource
 	{
-		protected:
-			Resource( std::string fn = "" ) : filename(fn)
-			{};
+		friend class Resources;
 
+		protected:
+			Resource( std::string fn = "" ) : filename(fn) {}
 			virtual ~Resource() = 0;
 
+		public:
+			const std::string getFileName() const;
+
+		private:
 			std::string filename;
-			friend class Resources;
 	};
+
+	inline const std::string Resource::getFileName() const
+	{ 
+		return filename;
+	}
 };
 #endif

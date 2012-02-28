@@ -14,7 +14,7 @@ namespace slge
 	{
 		public:
 			Scene();
-			virtual ~Scene() = 0;
+			virtual ~Scene();
 
 			void init();
 			void add( Entity* ent );
@@ -39,8 +39,8 @@ namespace slge
 		public:
 			enum
 			{
-				debug,
-				noDebug
+				debug		=	0x0000,
+				noDebug	=	0x0001
 			};
 	};
 

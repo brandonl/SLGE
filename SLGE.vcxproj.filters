@@ -19,6 +19,12 @@
     <Filter Include="Core\Platform">
       <UniqueIdentifier>{dc857f92-0a88-4eae-b556-fc98f92ef03f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Resources">
+      <UniqueIdentifier>{03feebf1-f886-4577-a836-dbc39d677324}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Assets">
+      <UniqueIdentifier>{08dbb2f0-c6b9-41f6-a944-655aba66a9f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\App.cpp">
@@ -28,12 +34,6 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\Render.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Resource.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\ResourceModule.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\Scene.cpp">
@@ -54,11 +54,23 @@
     <ClCompile Include="Core\Input.cpp">
       <Filter>Core\Platform</Filter>
     </ClCompile>
-    <ClCompile Include="Core\ImageRef.cpp">
-      <Filter>Core</Filter>
+    <ClCompile Include="Core\Resource.cpp">
+      <Filter>Core\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ResourceModule.cpp">
+      <Filter>Core\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Image.cpp">
+      <Filter>Core\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Core\stb_image.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Font.cpp">
+      <Filter>Core\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Text2D.cpp">
+      <Filter>Core\Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,12 +89,6 @@
     <ClInclude Include="Core\Render.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Resource.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\ResourceModule.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Scene.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -98,23 +104,41 @@
     <ClInclude Include="Test\Earth.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Defines.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Window.h">
       <Filter>Core\Platform</Filter>
     </ClInclude>
     <ClInclude Include="Core\Input.h">
       <Filter>Core\Platform</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Image.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="Core\ResourceModule.h">
+      <Filter>Core\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Resource.h">
+      <Filter>Core\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Core\ImageRef.h">
-      <Filter>Core</Filter>
+      <Filter>Core\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Image.h">
+      <Filter>Core\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Core\stb_image.hpp">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\stb_truetype.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Font.h">
+      <Filter>Core\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\FontRef.h">
+      <Filter>Core\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Settings.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Text2D.h">
+      <Filter>Core\Resources</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

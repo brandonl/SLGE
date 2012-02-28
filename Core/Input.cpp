@@ -1,16 +1,16 @@
-#include <iostream>
+#include <cstdio>
 #include "Input.h"
 #define GLFW_NO_GLU
 #include <GL/glfw.h>
 
 using namespace slge;
 
-Input *Input::instance = NULL;
+Input *Input::instance = nullptr;
 
 Input::Input()
 {
-	if( instance != NULL )
-		std::cerr << "Only one Input context may be active at a time.";
+	if( instance != nullptr )
+		printf( "Only one Input context may be active at a time.\n" );
 	instance = this;
 }
 

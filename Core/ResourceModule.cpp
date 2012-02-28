@@ -1,15 +1,14 @@
 #include "ResourceModule.h"
-#include <iostream>
-#include "Resource.h"
+#include <cstdio>
 
 using namespace slge;
 
-Resources *Resources::instance = NULL;
+Resources *Resources::instance = nullptr;
 
 Resources::Resources()
 {
-	if( instance != NULL )
-		std::cerr << "Only one Resource module allowed.\n";;
+	if( instance != nullptr )
+		printf( "Only one Resource module allowed.\n" );
 
 	instance = this;
 	workingDirectory =  "../../Resources/";

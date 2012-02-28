@@ -1,30 +1,21 @@
-#define GLFW_NO_GLU
-#include <GL/glfw.h>
 #include "Texture.h"
-#include <iostream>
+#include <cstdio>
+#include "ImageRef.h"
 
-using std::cerr;
-using std::cout;
-using std::endl;
-using std::string;
 using namespace slge;
-
-Texture::Texture()
-	:	Resource(),
-		name(0)
-{
-}
 
 Texture::~Texture()
 {
 	glDeleteTextures( 1, &name );
 }
 
-bool Texture::load( const std::string& fp, int w, int h )
+bool Texture::load( const ImageRef &iref )
 {
-	if( fp.empty() ) return false;
+	if( !iref ) return false;
 
-	filename = fp;
+	width = iref.getImageWidth();
+	height = iref.getImageHeight();
+
 	glEnable( GL_TEXTURE_2D );
 	glGenTextures( 1, &name );
 	glBindTexture( GL_TEXTURE_2D, name );
@@ -32,12 +23,12 @@ bool Texture::load( const std::string& fp, int w, int h )
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
 
-	if( !glfwLoadTexture2D( filename.c_str(), GLFW_ORIGIN_UL_BIT ) )
-	{
-		cerr << "Failed to load Texture with path: " << filename << endl;
-		glDisable( GL_TEXTURE_2D );
-		return false;
-	}
+	glTexImage2D(	GL_TEXTURE_2D, 0, GL_RGBA, 
+						width, height, 0, GL_RGBA, 
+						GL_UNSIGNED_BYTE,
+						iref.referencedData() 
+					);
+
 	glDisable( GL_TEXTURE_2D );
 	return true;
 }

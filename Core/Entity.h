@@ -2,21 +2,25 @@
 #define ENTITY_H
 
 #include <string>
-#include <iostream>
+#include <cstdio>
 #include <Box2D.h>
 
 namespace slge
 {
 	class Scene;
 
-	class Entity
+	class Entity // : public Node
 	{
 		public:
 			explicit Entity( const std::string tag = "" ) : tag(tag), condemned(false) 
 			{
-				std::cout << "Create entity: " << tag << std::endl;
-			};
-			virtual ~Entity() { std::cout << "Destroying entity\n"; };
+				printf( "Create entity: %s\n", tag.c_str() );
+			}
+
+			virtual ~Entity() 
+			{ 
+				printf( "Destroying entity: %s\n", tag.c_str() );
+			}
 
 			virtual void update() = 0;
 			virtual void draw() const = 0;

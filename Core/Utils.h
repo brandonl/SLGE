@@ -4,6 +4,10 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <queue>
+
+#define BLT_TOUCH(x) ((void)(x))
+#define bltAssert(A) assert(A)
 
 class Uncopyable
 {
@@ -21,6 +25,32 @@ void eraseUnordered( std::vector<T>& v, size_t index)
 {
     v[index] = std::move( v.back() );
     v.pop_back();
+}
+//------------------------------------------------------Containter Poppers----------
+template <class T>
+inline typename T::value_type popFrom( T& container ) 
+{
+	T::value_type val = container.top();
+	container.pop();
+	return val;
+}
+
+// Queue overload
+template <class T>
+inline typename std::queue<T>::value_type popFrom( std::queue<T>& container ) 
+{
+	queue<T>::value_type val = container.front();
+	container.pop();
+	return val;
+}
+
+// Vector overload
+template <class T>
+inline typename std::vector<T>::value_type popFrom( std::vector<T>& container ) 
+{
+	queue<T>::value_type val = container.back();
+	container.pop_back();
+	return val;
 }
 
 struct deleteMapFunctor

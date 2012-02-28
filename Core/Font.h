@@ -1,45 +1,46 @@
 #ifndef FONT_H
 #define FONT_H
 
-#if defined(_MSC_VER)&&(_MSC_VER>=1200)
-#pragma once
-#endif
-
 #include "Resource.h"
+#include <string>
+#include "Utils.h"
+#include <memory>
 
 namespace slge
 {
-	class Font : public Resource
+	class Font : public Resource, private Uncopyable
 	{
 		public:
+			struct glyphData;
 
-			struct glyphData
-			{
-			   float x0, y0, s0, t0; // top-left
-			   float x1, y1, s1, t1; // bottom-right
-			};
+			Font( const std::string &fp );
+			Font& Font::operator=( Font&& m );
 
-			explicit Font();
-			~Font();
-
-			bool load(	const std::string &fp,
-						float size,
-						unsigned int texWidth = 0,
-						unsigned int texHeight = 0 );
-
-			void use() const;
-			void toss() const;
-			glyphData getGlyphData( char c, float *x, float *y ) const;
-
-			float pixelHeight;
-			unsigned int textureWidth;
-			unsigned int textureHeight;
+			const void*			getBitmapData() const;
+			const void*			getCharData() const;
+			const glyphData	getGlyphData( char c, float *x, float *y ) const;
 
 		private:
-			unsigned int texid;
-			void* cdata;
+			std::unique_ptr< unsigned char > charData;
+			std::unique_ptr< unsigned char > bitmap;
 
+		public:
+			struct glyphData
+			{
+			   float ulx, uly, uls, ult; // top-left
+			   float lrx, lry, lrs, lrt; // bottom-right
+			};
 	};
+
+	inline const void* Font::getBitmapData() const
+	{
+		return bitmap.get();
+	}
+
+	inline const void* Font::getCharData() const
+	{
+		return charData.get();
+	}
 };
 
 #endif

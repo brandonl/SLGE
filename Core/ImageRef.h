@@ -3,17 +3,16 @@
 
 #include "Image.h"
 #include "ResourceModule.h"
-#include <iostream>
 
 namespace slge
 {
 	class ImageRef
 	{
 		public:
-			explicit ImageRef( const std::string& filename = "" )
+			explicit ImageRef( const std::string& fn = "" )
 			{
-				if( filename.size() )
-					Resources::request( filename, image );
+				if( fn.size() )
+					Resources::request( fn, image );
 			}
 
 			ImageRef( ImageRef&& m )
@@ -27,9 +26,38 @@ namespace slge
 				return *this;
 			}
 
+			operator bool() const
+			{
+				return static_cast<bool>( image );
+			}
+
+			const void* referencedData() const;
+			const std::string getImageName() const;
+			const int getImageWidth() const;
+			const int getImageHeight() const;
+
 		private:
 			std::shared_ptr< Image > image;
 	};
+
+	inline const void* ImageRef::referencedData() const
+	{
+		return image->getData();
+	}
+
+	inline const std::string ImageRef::getImageName() const
+	{
+		return image->getFileName();
+	}
+	inline const int ImageRef::getImageWidth() const
+	{
+		return image->getWidth();
+	}
+
+	inline const int ImageRef::getImageHeight() const
+	{
+		return  image->getHeight();
+	}
 };
 
 #endif

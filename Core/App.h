@@ -4,7 +4,6 @@
 #include "Window.h"
 #include "Input.h"
 #include "Scene.h"
-#include "World.h"
 #include <string>
 #include "ResourceModule.h"
 #include "Utils.h"

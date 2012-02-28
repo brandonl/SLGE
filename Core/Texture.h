@@ -1,49 +1,61 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
-#include "Resource.h"
 #include <string>
 #include <windows.h>
 #include <gl/gl.h>
+#include "Utils.h"
 
 namespace slge
 {
+	class ImageRef;
 
-	class Texture : public Resource
+	class Texture : private Uncopyable
 	{
 		public:
-			explicit Texture();
 			~Texture();
 
-			bool load( const std::string& fp, int w = -1, int h = -1 );
+			bool load( const ImageRef &iref );
 
-			void bind() const
-			{
-				glEnable( GL_TEXTURE_2D );
-				glBindTexture( GL_TEXTURE_2D, name );
-			}
+			void bind() const;
+			void unbind() const;
 
-			void unbind() const
-			{
-				glDisable( GL_TEXTURE_2D );
-				glBindTexture( GL_TEXTURE_2D, 0 );
-			}
-
-			int getWidth() const
-			{
-				return width;
-			}
-
-			int getHeight() const
-			{
-				return height;
-			}
+			const int		getWidth() const;
+			const int		getHeight() const;
+			const GLuint	getId() const;
 
 		private:
-			unsigned int name;
+			GLuint name;
 			int width;
 			int height;
 	};
+
+	inline void Texture::bind() const
+	{
+		glEnable( GL_TEXTURE_2D );//Not needed with shaders GL driver will tell GPU
+		glBindTexture( GL_TEXTURE_2D, name );
+	}
+
+	inline void Texture::unbind() const
+	{
+		glDisable( GL_TEXTURE_2D );
+		glBindTexture( GL_TEXTURE_2D, 0 );
+	}
+
+	inline const int Texture::getWidth() const
+	{
+		return width;
+	}
+
+	inline const int Texture::getHeight() const
+	{
+		return height;
+	}
+
+	inline const GLuint Texture::getId() const
+	{
+		return name;
+	}
 };
 
 

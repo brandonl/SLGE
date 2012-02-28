@@ -41,8 +41,8 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Bin\$(Configuration)\</OutDir>
     <IntDir>Bin\$(Configuration)\Obj\</IntDir>
-    <IncludePath>C:\Lab\Libs\GLM;C:\Lab\Libs\stb;C:\Lab\Libs\GLFW-2.7.3\include;C:\Lab\Libs\Box2D_v2.2.1;C:\Lab\Libs\Box2D_v2.2.1\Box2D;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Lab\Libs\GLFW-2.7.3\lib-msvc100;C:\Lab\Libs\Box2D_v2.2.1\Build\vs2010\bin\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Lab\Libs\Simple OpenGL Image Library\src;C:\Lab\Libs\GLM;C:\Lab\Libs\stb;C:\Lab\Libs\GLFW-2.7.3\include;C:\Lab\Libs\Box2D_v2.2.1;C:\Lab\Libs\Box2D_v2.2.1\Box2D;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Lab\Libs\Simple OpenGL Image Library\lib;C:\Lab\Libs\GLFW-2.7.3\lib-msvc100;C:\Lab\Libs\Box2D_v2.2.1\Build\vs2010\bin\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -63,7 +63,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>OpenGL32.lib;GLFW.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenGL32.lib;GLFW.lib;Box2D.lib;libSOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -88,13 +88,15 @@
   <ItemGroup>
     <ClCompile Include="Core\App.cpp" />
     <ClCompile Include="Core\Color.cpp" />
-    <ClCompile Include="Core\ImageRef.cpp" />
+    <ClCompile Include="Core\Font.cpp" />
+    <ClCompile Include="Core\Image.cpp" />
     <ClCompile Include="Core\Input.cpp" />
     <ClCompile Include="Core\Render.cpp" />
     <ClCompile Include="Core\Resource.cpp" />
     <ClCompile Include="Core\ResourceModule.cpp" />
     <ClCompile Include="Core\Scene.cpp" />
     <ClCompile Include="Core\stb_image.cpp" />
+    <ClCompile Include="Core\Text2D.cpp" />
     <ClCompile Include="Core\Texture.cpp" />
     <ClCompile Include="Core\Vertex.cpp" />
     <ClCompile Include="Core\Window.cpp" />
@@ -103,8 +105,10 @@
   <ItemGroup>
     <ClInclude Include="Core\App.h" />
     <ClInclude Include="Core\Color.h" />
-    <ClInclude Include="Core\Defines.h" />
+    <ClInclude Include="Core\Settings.h" />
     <ClInclude Include="Core\Entity.h" />
+    <ClInclude Include="Core\Font.h" />
+    <ClInclude Include="Core\FontRef.h" />
     <ClInclude Include="Core\Image.h" />
     <ClInclude Include="Core\ImageRef.h" />
     <ClInclude Include="Core\Input.h" />
@@ -114,6 +118,8 @@
     <ClInclude Include="Core\ResourceModule.h" />
     <ClInclude Include="Core\Scene.h" />
     <ClInclude Include="Core\stb_image.hpp" />
+    <ClInclude Include="Core\stb_truetype.h" />
+    <ClInclude Include="Core\Text2D.h" />
     <ClInclude Include="Core\Texture.h" />
     <ClInclude Include="Core\Utils.h" />
     <ClInclude Include="Core\Vertex.h" />

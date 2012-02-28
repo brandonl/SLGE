@@ -1,7 +1,7 @@
 #include "Render.h"
 #include <Windows.h>
 #include <gl/GL.h>
-#include "Defines.h"
+#include "Settings.h"
 
 using namespace std;
 using namespace slge;

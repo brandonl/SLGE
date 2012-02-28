@@ -1,8 +1,6 @@
 #include "App.h"
-#include <iostream>
-#include "World.h"
 #include <sstream>
-#include "Defines.h"
+#include "Settings.h"
 
 using namespace slge;
 

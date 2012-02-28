@@ -31,14 +31,12 @@ namespace slge
 	{
 		auto ix = instance->cache.find( filename );
 
-		if( ix != instance->cache.end() )
-			// Copy to the resource handles internal ptr to the actuall resource..
+		if( ix != instance->cache.end() ) //Found
 			rsrc = std::dynamic_pointer_cast<T>( ix->second );
 
-		else
+		else //Not found in cache
 		{
-			//CTOR the resource
-			rsrc = std::make_shared<T>( filename );
+			rsrc = std::make_shared<T>( std::string( instance->workingDirectory ) + filename );
 			instance->cache.emplace( std::make_pair( filename, rsrc ) );
 		}
 	}

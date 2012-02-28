@@ -1,16 +1,16 @@
 #define GLFW_NO_GLU
 #include <GL/glfw.h>
 #include "Window.h"
-#include <iostream>
+#include <cstdio>
 
 using namespace slge;
 
-Window *Window::instance = NULL;
+Window *Window::instance = nullptr;
 
 Window::Window()
 {
-	if( instance != NULL )
-		std::cerr << "Only one Window may be active at a time."<< std::endl;
+	if( instance != nullptr )
+		printf( "Only one Window may be active at a time.\n" );
 
 	instance = this;
 }
@@ -31,7 +31,7 @@ void Window::init( const std::string& ntitle, int w, int h, int cdepth, int zdep
 	ratio = ( static_cast<GLfloat>( width ) / height );
 
 	if( !glfwInit() )
-		std::cerr <<  "GLFW Error: Failed to initialize GLFW" << std::endl;
+		printf( "GLFW Error: Failed to initialize GLFW\n" );
 
 	int bitsPerColor = cdepth / 4;
 
@@ -39,7 +39,7 @@ void Window::init( const std::string& ntitle, int w, int h, int cdepth, int zdep
 									bitsPerColor, bitsPerColor, bitsPerColor, bitsPerColor,
 									zbdepth, 0,
 									GLFW_WINDOW ) )
-		std::cerr <<  "GLFW Error:  Failed to open GL Context Window"<< std::endl;
+		printf( "GLFW Error:  Failed to open GL Context Window\n" );
 
 	this->center();
 

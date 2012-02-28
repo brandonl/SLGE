@@ -3,34 +3,40 @@
 
 #include <memory>
 #include <functional>
-
 #include "Resource.h"
 #include "Utils.h"
-#include "stb_image.hpp"
 
 namespace slge
 {
 	class Image : public Resource, private Uncopyable
 	{
 		public:
-			Image( const std::string filename )
-				:	Resource( filename ),
-					raw( stbi_load( filename.c_str(), &width, &height, nullptr, 4 ), stbi_image_free )
-			{
-			}
+			Image( const std::string& fn );
+			Image& operator=( Image&& m );
 
-			Image& operator=( Image&& m )
-			{
-				width = std::move( m.width );
-				height = std::move( m.height );
-				raw.swap( m.raw );
-				return *this;
-			}
+			const void* getData() const;
+			const int getWidth() const;
+			const int getHeight() const;
 
 		private:
 			int width, height;
 			std::unique_ptr< unsigned char, std::function<void(unsigned char*)> > raw;
 	};
+
+	inline const void* Image::getData() const
+	{
+		return raw.get();
+	}
+
+	inline const int Image::getWidth() const
+	{ 
+		return width;
+	}
+
+	inline const int Image::getHeight() const
+	{
+		return height;
+	}
 };
 
 #endif

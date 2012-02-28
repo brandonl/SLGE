@@ -14,12 +14,12 @@ Scene::Scene()
 	debugDraw.SetFlags( b2Draw::e_shapeBit );
 	stage.SetDebugDraw( &debugDraw );
 	stage.SetContactListener(this);
-	std::cout << "Creating Scene..." << this << std::endl;
+	printf( "Creating Scene...\n" );
 }
 
 Scene::~Scene()
 {
-	std::cout << "Destroying Scene..." << this << std::endl;
+	printf( "Destroying Scene...\n" );
 }
 
 void Scene::add( Entity *ent )
