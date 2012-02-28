@@ -1,10 +1,6 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#if defined(_MSC_VER)&&(_MSC_VER>=1200)
-#pragma once
-#endif
-
 #include <iostream>
 #include <algorithm>
 #include <vector>

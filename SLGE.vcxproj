@@ -86,39 +86,34 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Core\Actor.cpp" />
     <ClCompile Include="Core\App.cpp" />
-    <ClCompile Include="Core\Button.cpp" />
     <ClCompile Include="Core\Color.cpp" />
-    <ClCompile Include="Core\Font.cpp" />
+    <ClCompile Include="Core\ImageRef.cpp" />
     <ClCompile Include="Core\Input.cpp" />
-    <ClCompile Include="Core\Label.cpp" />
     <ClCompile Include="Core\Render.cpp" />
     <ClCompile Include="Core\Resource.cpp" />
     <ClCompile Include="Core\ResourceModule.cpp" />
     <ClCompile Include="Core\Scene.cpp" />
-    <ClCompile Include="Core\Sprite.cpp" />
+    <ClCompile Include="Core\stb_image.cpp" />
     <ClCompile Include="Core\Texture.cpp" />
     <ClCompile Include="Core\Vertex.cpp" />
     <ClCompile Include="Core\Window.cpp" />
     <ClCompile Include="Test\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Core\Actor.h" />
     <ClInclude Include="Core\App.h" />
-    <ClInclude Include="Core\Button.h" />
     <ClInclude Include="Core\Color.h" />
     <ClInclude Include="Core\Defines.h" />
     <ClInclude Include="Core\Entity.h" />
-    <ClInclude Include="Core\Font.h" />
+    <ClInclude Include="Core\Image.h" />
+    <ClInclude Include="Core\ImageRef.h" />
     <ClInclude Include="Core\Input.h" />
-    <ClInclude Include="Core\Label.h" />
     <ClInclude Include="Core\Rect.h" />
     <ClInclude Include="Core\Render.h" />
     <ClInclude Include="Core\Resource.h" />
     <ClInclude Include="Core\ResourceModule.h" />
     <ClInclude Include="Core\Scene.h" />
-    <ClInclude Include="Core\Sprite.h" />
+    <ClInclude Include="Core\stb_image.hpp" />
     <ClInclude Include="Core\Texture.h" />
     <ClInclude Include="Core\Utils.h" />
     <ClInclude Include="Core\Vertex.h" />

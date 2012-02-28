@@ -39,6 +39,5 @@ bool Texture::load( const std::string& fp, int w, int h )
 		return false;
 	}
 	glDisable( GL_TEXTURE_2D );
-	loaded = true;
 	return true;
 }

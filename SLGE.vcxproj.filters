@@ -21,22 +21,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Core\Actor.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Core\App.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Button.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Color.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Font.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Label.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\Render.cpp">
@@ -49,9 +37,6 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\Scene.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Sprite.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\Texture.cpp">
@@ -69,27 +54,21 @@
     <ClCompile Include="Core\Input.cpp">
       <Filter>Core\Platform</Filter>
     </ClCompile>
+    <ClCompile Include="Core\ImageRef.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\stb_image.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Core\Actor.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Core\App.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Button.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\Color.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\Entity.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Font.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Label.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\Rect.h">
@@ -105,9 +84,6 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\Scene.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Sprite.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\Texture.h">
@@ -130,6 +106,15 @@
     </ClInclude>
     <ClInclude Include="Core\Input.h">
       <Filter>Core\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Image.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ImageRef.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\stb_image.hpp">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

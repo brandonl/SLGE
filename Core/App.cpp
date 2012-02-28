@@ -18,7 +18,6 @@ void App::init( const std::string&& name, unsigned && width, unsigned&& height  
 {
 	window.init( name, width, height, 32, 24 );
 	input.init();
-	resources.init();
 	scene->init();
 }
 

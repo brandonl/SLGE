@@ -7,10 +7,6 @@
 #include <Box2D.h>
 #include <ctime>
 #include "Resourcemodule.h"
-#include "Button.h"
-#include "Label.h"
-#include "Actor.h"
-#include "Sprite.h"
 #include "Defines.h"
 #include <functional>
 
@@ -23,6 +19,7 @@ static const float CEXTENT = 48.0f;
 ///////////////////////////////////////////////////////////////////////////////
 // Title Screen
 ///////////////////////////////////////////////////////////////////////////////
+/*
 class Wall : public Actor
 {
 	public:
@@ -50,20 +47,25 @@ class Wall : public Actor
 		}
 		void onCollission( Entity *collider ) {}
 };
+*/
+
+#include "ImageRef.h"
 
 class home : public Scene
 {
 	public:
 		home()
+			:	ref( ImageRef( "Bcomet.tga" ) )
 		{
 		}
+
 		~home()  {}
 
 	private:
 		void doInit()
 		{
-			leftBound = new Wall( glm::vec2( 0, 0 ), glm::vec2( 0, Window::getHeight() ), std::bind( &Scene::createBody, this, std::placeholders::_1 ) );
-			title = Label( "THE MOON ISA", Resources::grabFont( "ProggySquare.ttf", 36.0f ), glm::vec2( Window::getWidth() >> 1, 25.0f ),  Color::purple );
+			//leftBound = new Wall( glm::vec2( 0, 0 ), glm::vec2( 0, Window::getHeight() ), std::bind( &Scene::createBody, this, std::placeholders::_1 ) );
+			//title = Label( "THE MOON ISA", Resources::grabFont( "ProggySquare.ttf", 36.0f ), glm::vec2( Window::getWidth() >> 1, 25.0f ),  Color::purple );
 		}
 
 		void doUpdate()
@@ -73,12 +75,13 @@ class home : public Scene
 		void doDraw()
 		{
 			Scene::doDraw();
-			title.draw();
+			//title.draw();
 		}
 
 	private:
-		Label title;
-		Wall *leftBound;
+		ImageRef ref;
+		//Label title;
+		//Wall *leftBound;
 };
 
 #endif
