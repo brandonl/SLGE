@@ -12,9 +12,12 @@ namespace slge
 	class Color
 	{
 		public:
-			explicit Color();
+			Color();
 			explicit Color( float r, float g, float b, float a );
 			explicit Color( const std::string &hexValue );
+
+			bool operator ==( const Color& rhs ) const;
+			bool operator !=( const Color& rhs ) const;
 
 			float r, g, b, a;
 
@@ -30,5 +33,18 @@ namespace slge
 			static Color blue;
 
 	};
+
+	inline bool Color::operator ==( const Color& rhs ) const
+	{
+		return (	( fabs( this->r	- rhs.r ) < 0.00001f ) &&
+					( fabs( this->g	- rhs.g ) < 0.00001f ) && 
+					( fabs( this->b	- rhs.b ) < 0.00001f ) && 
+					( fabs( this->a	- rhs.a ) < 0.00001f ) );
+	}
+
+	inline bool Color::operator !=( const Color& rhs ) const
+	{
+		return !operator==( rhs );
+	}
 };
 #endif

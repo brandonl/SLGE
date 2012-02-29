@@ -12,7 +12,7 @@ namespace slge
 	class Texture2 : private Uncopyable
 	{
 		public:
-			explicit Texture2( const ImageRef &iref );
+			explicit Texture2( const ImageRef &&iref );
 			~Texture2();
 
 			void bind() const;

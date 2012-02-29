@@ -87,10 +87,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Core\App.cpp" />
+    <ClCompile Include="Core\Button.cpp" />
     <ClCompile Include="Core\Color.cpp" />
     <ClCompile Include="Core\Font.cpp" />
     <ClCompile Include="Core\Image.cpp" />
     <ClCompile Include="Core\Input.cpp" />
+    <ClCompile Include="Core\Label.cpp" />
     <ClCompile Include="Core\Render.cpp" />
     <ClCompile Include="Core\Resource.cpp" />
     <ClCompile Include="Core\Scene.cpp" />
@@ -103,7 +105,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\App.h" />
+    <ClInclude Include="Core\Button.h" />
     <ClInclude Include="Core\Color.h" />
+    <ClInclude Include="Core\Label.h" />
     <ClInclude Include="Core\Settings.h" />
     <ClInclude Include="Core\Entity.h" />
     <ClInclude Include="Core\Font.h" />
@@ -111,7 +115,7 @@
     <ClInclude Include="Core\Image.h" />
     <ClInclude Include="Core\ImageRef.h" />
     <ClInclude Include="Core\Input.h" />
-    <ClInclude Include="Core\Rect.h" />
+    <ClInclude Include="Core\Quad.h" />
     <ClInclude Include="Core\Render.h" />
     <ClInclude Include="Core\Resource.h" />
     <ClInclude Include="Core\ResourceModule.h" />

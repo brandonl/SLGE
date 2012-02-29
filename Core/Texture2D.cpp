@@ -3,7 +3,7 @@
 
 using namespace slge;
 
-Texture2::Texture2( const ImageRef &iref )
+Texture2::Texture2( const ImageRef &&iref )
 {
 	if( iref )
 	{

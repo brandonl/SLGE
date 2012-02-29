@@ -2,24 +2,14 @@
 #define VC_LEANMEAN
 
 #include "App.h"
-#include <cstdio>
+
 #include "Earth.h"
 using namespace slge;
 
 int main()
 {
 	App env( std::string( "SLGE" ), 480u, 640u );
-	env.set( new Home() );
-	printf( "Set Scene...\n" );
-
-	// This order MUST be maintained.
-	// Initializing app must take place after scene.
-	// TODO: Create Macro to aid in this invariant.
-	//env.init( std::string( "SLGE" ), 480u, 640u );
-	printf( "Inited app...\n" );
+	env.set( new SplashScreen() );
 	env.run();
-
-	char c;
-	c = getchar();
 	return 0;
 }

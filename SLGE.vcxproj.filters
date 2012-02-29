@@ -22,6 +22,9 @@
     <Filter Include="Core\Resources">
       <UniqueIdentifier>{03feebf1-f886-4577-a836-dbc39d677324}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\UI">
+      <UniqueIdentifier>{35d999aa-83ac-4e64-905e-d3c7f62c4110}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\App.cpp">
@@ -63,8 +66,14 @@
     <ClCompile Include="Core\Text2D.cpp">
       <Filter>Core\Resources</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Label.cpp">
+      <Filter>Core\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Button.cpp">
+      <Filter>Core\UI</Filter>
+    </ClCompile>
     <ClCompile Include="Core\Texture2D.cpp">
-      <Filter>Core</Filter>
+      <Filter>Core\Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -75,9 +84,6 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\Entity.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Rect.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\Render.h">
@@ -131,8 +137,17 @@
     <ClInclude Include="Core\Text2D.h">
       <Filter>Core\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Texture2D.h">
+    <ClInclude Include="Core\Quad.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Label.h">
+      <Filter>Core\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Button.h">
+      <Filter>Core\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Texture2D.h">
+      <Filter>Core\Resources</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

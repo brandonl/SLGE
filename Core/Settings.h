@@ -7,7 +7,7 @@ namespace slge
 	static const double	DELTA_TIME = 1.0/FIXED_UPDATE_SPEED;
 	static const float	PTM_RATIO = 32.f;
 
-	static const float	TTF_DEFAULT_PIXEL_HEIGHT = 16.f;
+	static const float	TTF_DEFAULT_PIXEL_HEIGHT = 11.f;
 	static const int		TTF_FONT_WIDTH = 512;
 	static const int		TTF_FONT_HEIGHT = 512;
 

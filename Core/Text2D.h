@@ -5,29 +5,29 @@
 #include <windows.h>
 #include <gl/gl.h>
 #include "Utils.h"
-#include <array>
 #include "Vertex.h"
 #include "FontRef.h"
+#include <glm/glm.hpp>
+#include <vector>
+#include "Color.h"
 
 namespace slge
 {
 	class Text2 : private Uncopyable
 	{
 		public:
-			explicit Text2( const FontRef &fref );
+			explicit Text2( const FontRef &&fref );
 			~Text2();
 
+			const std::vector<Vertex> buildStaticString( const std::string& msg, glm::vec2 pos, const Color& col = Color(), float size = 0.f ) const;
+			void immediateDrawString( const std::string& msg, glm::vec2 pos, const Color& col = Color(), float size = 0.f ) const;
 			void bind() const;
 			void unbind() const;
-			void dynamicDrawString( const std::string& msg, float scale = 1.f ) const;
 			const GLuint getId() const;
-			
-		private:
-			void precomputeFontFaces( const FontRef &fref );
 
 		private:
+			const FontRef fref;
 			GLuint name;
-			std::array< std::array< Vertex, 4 >, 95 > precomputedSpatialGlyphs;
 	};
 
 	inline void Text2::bind() const

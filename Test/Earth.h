@@ -47,15 +47,19 @@ class Wall : public Actor
 #include "Settings.h"
 #include "Text2D.h"
 #include "Texture2D.h"
+#include "Label.h"
+#include <glm/glm.hpp>
 
 using namespace slge;
+using namespace glm;
 
-class Home : public Scene
+class SplashScreen : public Scene
 {
 	public:
-		Home()
-			:	label( FontRef( "arial.ttf" ) ),
-				testTexture( ImageRef("Earthling.png") )
+		SplashScreen()
+			:	proggyTexter( FontRef( "ProggySquare.ttf" ) ),
+				testTexture( ImageRef("Earthling.png") ),
+				splashTitle( proggyTexter, "THE MOON IS A HARSHH", vec2( 100.f, 100.f ), Color::orange )
 		{
 		}
 
@@ -68,14 +72,14 @@ class Home : public Scene
 		void doDraw()
 		{
 			Scene::doDraw();
-			label.dynamicDrawString( "Random" );
-			//title.draw();
+			proggyTexter.immediateDrawString( "rom", vec2( 1.f, 11.f ) );
+			splashTitle.draw();
 		}
 
 	private:
-		Text2 label;
+		Text2 proggyTexter;
 		Texture2 testTexture;
-		//Label title;
+		Label splashTitle;
 		//Wall *leftBound;
 };
 

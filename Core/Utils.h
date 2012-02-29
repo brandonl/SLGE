@@ -1,10 +1,10 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include <iostream>
 #include <algorithm>
 #include <vector>
 #include <queue>
+#include <cassert>
 
 #define BLT_TOUCH(x) ((void)(x))
 #define bltAssert(A) assert(A)
