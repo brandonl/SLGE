@@ -8,34 +8,28 @@ namespace slge
 {
 	class Window : private Uncopyable
 	{
-		public:
-			Window();
+		friend class App;
+
+		private:
+			explicit Window( const std::string& , int, int, int, int );
 			~Window();
-			void init( const std::string& , int, int, int, int );
 
-			static void		update();
-			static void		clear();
-			static void		swapBuffers();
-			static bool		isOpen();
-			static int		getWidth();
-			static int		getHeight();
-			static float	getAspectRatio();
-			static double	tick();
-			static void		setTitle( const std::string& );
+			void update();
+			void clear();
+			void swapBuffers();
+			bool isOpen();
+			void close();
+			void center();
+			static void		windowResizeCB( int width, int height );
 
-		private:
-			static Window *instance;
-			static void windowResize( int width, int height );
-			static void	center();
-			static int *displaySize();
-
-		private:
-			std::string title;
-			int width;
-			int height;
-			int cdepth;
-			int zbdepth;
-			float ratio;
+		public:
+			static void				setTitle( const std::string& );
+			static const float	getAspectRatio();
+			static const int		getWidth();
+			static const int		getHeight();
+			static const int		getDisplayWidth();
+			static const int		getDisplayHeight();
+			static const double	tick();
 	};
 
 };

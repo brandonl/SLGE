@@ -9,7 +9,7 @@
 
 using namespace slge;
 
-Font::Font( const std::string &fn )
+Font::Font( const std::string &fn, float pixHeight )
 	:	Resource( fn )
 {
 	std::ifstream tffFile( fn.c_str(), std::ios::binary );
@@ -26,9 +26,9 @@ Font::Font( const std::string &fn )
 		charData.reset( new unsigned char[ sizeof stbtt_bakedchar * 96] );
 		bitmap.reset( new unsigned char[ TTF_FONT_WIDTH * TTF_FONT_HEIGHT ] );
 
-		if( ( stbtt_BakeFontBitmap(	// Pretty casts...."_"
+		if( ( stbtt_BakeFontBitmap(	// Pretty casts....=_=
 												reinterpret_cast<const unsigned char*>( buffer.str().c_str() ), 0, 
-												TTF_DEFAULT_PIXEL_HEIGHT, bitmap.get(), TTF_FONT_WIDTH, TTF_FONT_HEIGHT, 32, 96,
+												pixHeight, bitmap.get(), TTF_FONT_WIDTH, TTF_FONT_HEIGHT, 32, 96,
 												reinterpret_cast<stbtt_bakedchar *>( charData.get() ) ) == 0 
 											) )
 			printf( "Error: No characters fit and no rows were used. TTF file: %s \n", fn.c_str() );

@@ -5,63 +5,39 @@
 
 using namespace slge;
 
-Window *Window::instance = nullptr;
-
-Window::Window()
+Window::Window( const std::string& ntitle, int w, int h, int cdepth, int zdepth )
 {
-	if( instance != nullptr )
-		printf( "Only one Window may be active at a time.\n" );
-
-	instance = this;
-}
-
-Window::~Window()
-{
-	glfwCloseWindow();
-	glfwTerminate();
-}
-
-void Window::init( const std::string& ntitle, int w, int h, int cdepth, int zdepth )
-{
-	title = ntitle;
-	width = w;
-	height = h;
-	cdepth = cdepth;
-	zbdepth = zdepth;
-	ratio = ( static_cast<GLfloat>( width ) / height );
-
 	if( !glfwInit() )
 		printf( "GLFW Error: Failed to initialize GLFW\n" );
 
 	int bitsPerColor = cdepth / 4;
+	if( h == 0 ) h = 1;
 
-	if( !glfwOpenWindow( 	width, height,
+	// TODO: Add option.
+	glfwOpenWindowHint( GLFW_WINDOW_NO_RESIZE, GL_TRUE );
+
+	if( !glfwOpenWindow( 	w, h,
 									bitsPerColor, bitsPerColor, bitsPerColor, bitsPerColor,
-									zbdepth, 0,
+									zdepth, 0,
 									GLFW_WINDOW ) )
 		printf( "GLFW Error:  Failed to open GL Context Window\n" );
 
 	this->center();
 
-	glfwSetWindowTitle( title.c_str() );
-
 	// Disable polling on swap buffers; we will call on our own terms.
 	glfwDisable( GLFW_AUTO_POLL_EVENTS );
+	glfwSetWindowTitle( ntitle.c_str() );
 	glfwEnable( GLFW_KEY_REPEAT );
-	glfwOpenWindowHint( GLFW_WINDOW_NO_RESIZE, GL_TRUE );
-	glfwSetWindowSizeCallback( windowResize );
+	glfwSetWindowSizeCallback( windowResizeCB );
 
 	//OpenGL Immediate mode set-up
-	//TODO: Remove when OGL3 Core
-	if( height == 0 )
-		height = 1;
-
-	glViewport( 0, 0, width, height );
+	//TODO: Remove when OGL3 Core - Place in new class
+	glViewport( 0, 0, w, h );
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	glOrtho(0.0f, width, height, 0.0f, -1.0, 1.0);
+	glOrtho(0.0f, w, h, 0.0f, -1.0, 1.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
@@ -72,13 +48,10 @@ void Window::init( const std::string& ntitle, int w, int h, int cdepth, int zdep
 	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 }
 
-
-void Window::windowResize( int w, int h )
+Window::~Window()
 {
-	instance->width = w;
-	instance->height = h;
-
-	glViewport( 0, 0, instance->width, instance->height );
+	glfwCloseWindow();
+	glfwTerminate();
 }
 
 void Window::update()
@@ -98,25 +71,44 @@ void Window::swapBuffers()
 
 bool Window::isOpen()
 {
-	return ( glfwGetWindowParam( GLFW_OPENED ) == 0 ? false : true );
+	return ( !glfwGetWindowParam( GLFW_OPENED ) ? false : true );
 }
 
-int Window::getWidth()
+void Window::close()
 {
-	return instance->width;
+	glfwCloseWindow();
 }
 
-int Window::getHeight()
+void Window::center()
 {
-	return instance->height;
+	glfwSetWindowPos( ( getDisplayWidth() - getWidth() ) / 2, ( getDisplayHeight() - getHeight() ) / 2 );
 }
 
-float Window::getAspectRatio()
+void Window::windowResizeCB( int w, int h )
 {
-	return instance->ratio;
+	glViewport( 0, 0, w, h );
 }
 
-double Window::tick()
+const int Window::getWidth()
+{
+	int w = 0, h = 0;
+	glfwGetWindowSize( &w, &h );
+	return w;
+}
+
+const int Window::getHeight()
+{
+	int w = 0, h = 0;
+	glfwGetWindowSize( &w, &h );
+	return h;
+}
+
+const float Window::getAspectRatio()
+{
+	return ( static_cast<GLfloat>( getWidth() ) / getHeight() );
+}
+
+const double Window::tick()
 {
 	return glfwGetTime();
 }
@@ -126,18 +118,16 @@ void Window::setTitle( const std::string& ntitle )
 	glfwSetWindowTitle( ntitle.c_str() );
 }
 
-void Window::center()
-{
-	int *displaySize = instance->displaySize();
-
-	glfwGetWindowSize( &instance->width, &instance->height );
-	glfwSetWindowPos( ( displaySize[0] - instance->width ) / 2, ( displaySize[1] - instance->height ) / 2 );
-}
-
-int *Window::displaySize()
+const int Window::getDisplayHeight()
 {
 	GLFWvidmode desktopResolution;
 	glfwGetDesktopMode( &desktopResolution );
-	static int displaySize[2] = { desktopResolution.Width, desktopResolution.Height };
-	return displaySize;
+	return desktopResolution.Height;
+}
+
+const int Window::getDisplayWidth()
+{
+	GLFWvidmode desktopResolution;
+	glfwGetDesktopMode( &desktopResolution );
+	return desktopResolution.Width;
 }

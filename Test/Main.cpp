@@ -8,14 +8,14 @@ using namespace slge;
 
 int main()
 {
-	App env;
+	App env( std::string( "SLGE" ), 480u, 640u );
 	env.set( new Home() );
 	printf( "Set Scene...\n" );
 
 	// This order MUST be maintained.
 	// Initializing app must take place after scene.
 	// TODO: Create Macro to aid in this invariant.
-	env.init( std::string( "SLGE" ), 480u, 640u );
+	//env.init( std::string( "SLGE" ), 480u, 640u );
 	printf( "Inited app...\n" );
 	env.run();
 

@@ -16,7 +16,6 @@ namespace slge
 			Scene();
 			virtual ~Scene();
 
-			void init();
 			void add( Entity* ent );
 			void update();
 			void draw();
@@ -25,7 +24,6 @@ namespace slge
 			b2Body* createBody( const b2BodyDef &bodyDef );
 
 		protected:
-			virtual void doInit() = 0;
 			virtual void doUpdate();
 			virtual void doDraw();
 
@@ -43,11 +41,6 @@ namespace slge
 				noDebug	=	0x0001
 			};
 	};
-
-	inline void Scene::init()
-	{
-		doInit();
-	}
 
 	inline void Scene::update()
 	{

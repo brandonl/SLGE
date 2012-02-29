@@ -1,29 +1,32 @@
-#ifndef APP_H
-#define APP_H
+#ifndef __APP_H__
+#define __APP_H__
 
 #include "Window.h"
 #include "Input.h"
 #include "Scene.h"
 #include <string>
-#include "ResourceModule.h"
 #include "Utils.h"
 
 namespace slge
 {
+	class Window;
+	class Input;
+
 	class App : private Uncopyable
 	{
 		public:
-			App();
+			App( const std::string&& name, unsigned&& width, unsigned&& height );
 			~App();
 
 			void run();
-			void init( const std::string&& name, unsigned&& width, unsigned&& height );
 			void set( Scene* scene );
+
+			static double getFPS();
+			static double getGameSpeed();
 	
 		private:
 			Window window;
 			Input input;
-			Resources resources;
 			std::unique_ptr<Scene> scene;
 	};
 

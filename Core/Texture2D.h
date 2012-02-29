@@ -1,21 +1,19 @@
-#ifndef TEXTURE_H
-#define TEXTURE_H
+#ifndef __TEXTURE_2D_H__
+#define __TEXTURE_2D_H__
 
 #include <string>
 #include <windows.h>
 #include <gl/gl.h>
 #include "Utils.h"
+#include "ImageRef.h"
 
 namespace slge
 {
-	class ImageRef;
-
-	class Texture : private Uncopyable
+	class Texture2 : private Uncopyable
 	{
 		public:
-			~Texture();
-
-			bool load( const ImageRef &iref );
+			explicit Texture2( const ImageRef &iref );
+			~Texture2();
 
 			void bind() const;
 			void unbind() const;
@@ -30,29 +28,30 @@ namespace slge
 			int height;
 	};
 
-	inline void Texture::bind() const
+	inline void Texture2::bind() const
 	{
-		glEnable( GL_TEXTURE_2D );//Not needed with shaders GL driver will tell GPU
+		//Not needed with shaders GL driver will tell GPU
+		glEnable( GL_TEXTURE_2D );
 		glBindTexture( GL_TEXTURE_2D, name );
 	}
 
-	inline void Texture::unbind() const
+	inline void Texture2::unbind() const
 	{
 		glDisable( GL_TEXTURE_2D );
 		glBindTexture( GL_TEXTURE_2D, 0 );
 	}
 
-	inline const int Texture::getWidth() const
+	inline const int Texture2::getWidth() const
 	{
 		return width;
 	}
 
-	inline const int Texture::getHeight() const
+	inline const int Texture2::getHeight() const
 	{
 		return height;
 	}
 
-	inline const GLuint Texture::getId() const
+	inline const GLuint Texture2::getId() const
 	{
 		return name;
 	}

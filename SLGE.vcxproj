@@ -93,11 +93,10 @@
     <ClCompile Include="Core\Input.cpp" />
     <ClCompile Include="Core\Render.cpp" />
     <ClCompile Include="Core\Resource.cpp" />
-    <ClCompile Include="Core\ResourceModule.cpp" />
     <ClCompile Include="Core\Scene.cpp" />
     <ClCompile Include="Core\stb_image.cpp" />
     <ClCompile Include="Core\Text2D.cpp" />
-    <ClCompile Include="Core\Texture.cpp" />
+    <ClCompile Include="Core\Texture2D.cpp" />
     <ClCompile Include="Core\Vertex.cpp" />
     <ClCompile Include="Core\Window.cpp" />
     <ClCompile Include="Test\Main.cpp" />
@@ -120,7 +119,7 @@
     <ClInclude Include="Core\stb_image.hpp" />
     <ClInclude Include="Core\stb_truetype.h" />
     <ClInclude Include="Core\Text2D.h" />
-    <ClInclude Include="Core\Texture.h" />
+    <ClInclude Include="Core\Texture2D.h" />
     <ClInclude Include="Core\Utils.h" />
     <ClInclude Include="Core\Vertex.h" />
     <ClInclude Include="Core\Window.h" />

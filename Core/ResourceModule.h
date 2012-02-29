@@ -4,6 +4,8 @@
 #include <unordered_map>
 #include "Utils.h"
 #include <memory>
+#include "Settings.h"
+#include <cstdio>
 
 namespace slge
 {
@@ -12,38 +14,34 @@ namespace slge
 	class Resources : private Uncopyable
 	{
 		public:
-			Resources();
-			~Resources(){}
-
 			template <class T>
-			static void	request( const std::string& filename, std::shared_ptr<T> &rsrc );
-			static void	setWorkingDir( const std::string& path );
+			static void request( const std::string& filename, std::shared_ptr<T> &rsrc )
+			{
+				static Resources tmpResLoader;
+				tmpResLoader.processRequest( filename, rsrc );
+			}
+
+		private:
+			template <class T>
+			void	processRequest( const std::string& filename, std::shared_ptr<T> &rsrc );
 
 		private:
 			std::unordered_map< std::string, std::shared_ptr<Resource> > cache;
-			std::string workingDirectory;
-
-			static Resources* instance;
 	};
 
 	template <class T>
-	void Resources::request( const std::string& filename, std::shared_ptr<T> &rsrc )
+	void Resources::processRequest( const std::string& filename, std::shared_ptr<T> &rsrc )
 	{
-		auto ix = instance->cache.find( filename );
+		auto ix = cache.find( filename );
 
-		if( ix != instance->cache.end() ) //Found
+		if( ix != cache.end() ) //Found
 			rsrc = std::dynamic_pointer_cast<T>( ix->second );
 
 		else //Not found in cache
 		{
-			rsrc = std::make_shared<T>( std::string( instance->workingDirectory ) + filename );
-			instance->cache.emplace( std::make_pair( filename, rsrc ) );
+			rsrc = std::make_shared<T>( std::string( RESOURCE_DIR ) + filename );
+			cache.emplace( std::make_pair( filename, rsrc ) );
 		}
-	}
-
-	inline void Resources::setWorkingDir( const std::string& dir )
-	{
-		instance->workingDirectory = dir;
 	}
 };
 

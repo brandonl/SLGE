@@ -2,10 +2,11 @@
 #define RESOURCE_H
 
 #include <string>
+#include "Utils.h"
 
 namespace slge
 {
-	class Resource
+	class Resource : private Uncopyable
 	{
 		friend class Resources;
 

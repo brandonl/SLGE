@@ -6,13 +6,6 @@
 #include <cstdio>
 #include <Box2D.h>
 
-#include "Scene.h"
-#include "Window.h"
-#include "Resourcemodule.h"
-#include "Settings.h"
-
-using namespace slge;
-
 static const float BEXTENT = 48.0f;
 static const float PEXTENT = 32.0f;
 static const float CEXTENT = 48.0f;
@@ -50,28 +43,23 @@ class Wall : public Actor
 };
 */
 
-#include "ImageRef.h"
-#include "FontRef.h"
+#include "Scene.h"
+#include "Settings.h"
 #include "Text2D.h"
-#include "Texture.h"
+#include "Texture2D.h"
+
+using namespace slge;
 
 class Home : public Scene
 {
 	public:
 		Home()
-			:	iref( "Ogmo.png" ),
-				fref( "ProggySquare.ttf" )
-		{}
+			:	label( FontRef( "arial.ttf" ) ),
+				testTexture( ImageRef("Earthling.png") )
+		{
+		}
 
 	private:
-		void doInit()
-		{
-			t.load( ImageRef("Earthling.png") );
-			t.load( iref );
-			label.load( fref );
-			//leftBound = new Wall( glm::vec2( 0, 0 ), glm::vec2( 0, Window::getHeight() ), std::bind( &Scene::createBody, this, std::placeholders::_1 ) );
-			//title = Label( "THE MOON ISA", Resources::grabFont( "ProggySquare.ttf", 36.0f ), glm::vec2( Window::getWidth() >> 1, 25.0f ),  Color::purple );
-		}
 
 		void doUpdate()
 		{
@@ -80,15 +68,13 @@ class Home : public Scene
 		void doDraw()
 		{
 			Scene::doDraw();
-			label.draw( "Random" );
+			label.dynamicDrawString( "Random" );
 			//title.draw();
 		}
 
 	private:
-		Texture t;
 		Text2 label;
-		ImageRef iref;
-		FontRef fref;
+		Texture2 testTexture;
 		//Label title;
 		//Wall *leftBound;
 };

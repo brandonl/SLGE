@@ -4,11 +4,10 @@
 #include <memory>
 #include <functional>
 #include "Resource.h"
-#include "Utils.h"
 
 namespace slge
 {
-	class Image : public Resource, private Uncopyable
+	class Image : public Resource
 	{
 		public:
 			Image( const std::string& fn );

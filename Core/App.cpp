@@ -1,43 +1,17 @@
-#include "App.h"
 #include <sstream>
+#include "App.h"
 #include "Settings.h"
-
 using namespace slge;
 
-App::App() 
+//Does not exhibit perfect fowarding.
+App::App( const std::string&& name, unsigned && width, unsigned&& height ) 
+	:	window( Window( name, width, height, 32, 24 ) )
 {
+	input.init();
 }
 
 App::~App()
 {
-}
-
-void App::init( const std::string&& name, unsigned && width, unsigned&& height  )
-{
-	window.init( name, width, height, 32, 24 );
-	input.init();
-	scene->init();
-}
-
-void getFPS()
-{
-   static std::string title = "";
-   static int FPS = 60;
-   double nextSec = 0.0;
-   static double prevSec = 0.0;
-
-   FPS++;
-   nextSec = Window::tick();
-
-   if( nextSec - prevSec > 1.0 )
-   {
-		prevSec = nextSec;
-		std::stringstream ss;
-		ss << FPS << " FPS";
-		ss >> title;
-		Window::setTitle(title);
-		FPS = 0;
-   }
 }
 
 void App::run()
@@ -47,9 +21,9 @@ void App::run()
 	double timeSinceLastUpdate = 0.0;
    bool appIsRunning = true;
 
-	while( appIsRunning && Window::isOpen() )
+	while( appIsRunning && window.isOpen() )
 	{
-        Window::update();
+		window.update();
 
 		timeSinceLastUpdate += Window::tick() - lastTick;
 		lastTick = Window::tick();
@@ -70,9 +44,39 @@ void App::run()
 			timeSinceLastUpdate = 0;
 		}
 
-		Window::clear();
+		window.clear();
 		scene->draw();
-		Window::swapBuffers();
+		window.swapBuffers();
 		getFPS();
 	}
+
+	window.close();
+}
+
+double App::getFPS()
+{
+   static std::string title = "";
+   static double FPS = 60.;
+   double nextSec = 0.0;
+   static double prevSec = 0.0;
+
+   FPS++;
+   nextSec = Window::tick();
+
+   if( nextSec - prevSec > 1.0 )
+   {
+		prevSec = nextSec;
+		std::stringstream ss;
+		ss << FPS << " FPS";
+		ss >> title;
+		 //TODO: Remove setting Title
+		Window::setTitle(title);
+		FPS = 0.;
+   }
+	return FPS;
+}
+
+double App::getGameSpeed()
+{
+	return FIXED_UPDATE_SPEED;
 }

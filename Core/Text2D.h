@@ -7,21 +7,19 @@
 #include "Utils.h"
 #include <array>
 #include "Vertex.h"
+#include "FontRef.h"
 
 namespace slge
 {
-	class FontRef;
-
 	class Text2 : private Uncopyable
 	{
 		public:
+			explicit Text2( const FontRef &fref );
 			~Text2();
-
-			bool load( const FontRef &fref );
 
 			void bind() const;
 			void unbind() const;
-			void draw( const std::string& msg ) const;
+			void dynamicDrawString( const std::string& msg, float scale = 1.f ) const;
 			const GLuint getId() const;
 			
 		private:

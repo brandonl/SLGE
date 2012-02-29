@@ -3,17 +3,17 @@
 
 #include "Resource.h"
 #include <string>
-#include "Utils.h"
 #include <memory>
+#include "Settings.h"
 
 namespace slge
 {
-	class Font : public Resource, private Uncopyable
+	class Font : public Resource
 	{
 		public:
 			struct glyphData;
 
-			Font( const std::string &fp );
+			Font( const std::string &fp, float pixHeight = TTF_DEFAULT_PIXEL_HEIGHT );
 			Font& Font::operator=( Font&& m );
 
 			const void*			getBitmapData() const;
@@ -27,8 +27,8 @@ namespace slge
 		public:
 			struct glyphData
 			{
-			   float ulx, uly, uls, ult; // top-left
-			   float lrx, lry, lrs, lrt; // bottom-right
+			   float ulx, uly, uls, ult;
+			   float lrx, lry, lrs, lrt;
 			};
 	};
 

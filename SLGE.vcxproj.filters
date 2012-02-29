@@ -22,9 +22,6 @@
     <Filter Include="Core\Resources">
       <UniqueIdentifier>{03feebf1-f886-4577-a836-dbc39d677324}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Assets">
-      <UniqueIdentifier>{08dbb2f0-c6b9-41f6-a944-655aba66a9f1}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\App.cpp">
@@ -37,9 +34,6 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\Scene.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Texture.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\Vertex.cpp">
@@ -57,9 +51,6 @@
     <ClCompile Include="Core\Resource.cpp">
       <Filter>Core\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Core\ResourceModule.cpp">
-      <Filter>Core\Resources</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Image.cpp">
       <Filter>Core\Resources</Filter>
     </ClCompile>
@@ -71,6 +62,9 @@
     </ClCompile>
     <ClCompile Include="Core\Text2D.cpp">
       <Filter>Core\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Texture2D.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -90,9 +84,6 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\Scene.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Texture.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\Utils.h">
@@ -139,6 +130,9 @@
     </ClInclude>
     <ClInclude Include="Core\Text2D.h">
       <Filter>Core\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Texture2D.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
