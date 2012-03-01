@@ -11,6 +11,7 @@ namespace slge
 		public:
 			explicit ImageRef( const std::string& fn = "" )
 			{
+				printf( "Creating new Image reference: %s.\n", fn.c_str() );
 				if( fn.size() )
 					Resources::request( fn, image );
 			}

@@ -69,11 +69,14 @@
     <ClCompile Include="Core\Label.cpp">
       <Filter>Core\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Button.cpp">
-      <Filter>Core\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Texture2D.cpp">
       <Filter>Core\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Actor.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Sprite.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +151,15 @@
     </ClInclude>
     <ClInclude Include="Core\Texture2D.h">
       <Filter>Core\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Actor.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Sprite.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\PositionComponent.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

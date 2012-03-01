@@ -35,10 +35,14 @@ namespace slge
 		auto ix = cache.find( filename );
 
 		if( ix != cache.end() ) //Found
+		{
 			rsrc = std::dynamic_pointer_cast<T>( ix->second );
+			printf( "Image resource found cached: %s.\n", filename.c_str() );
+		}
 
 		else //Not found in cache
 		{
+			printf( "New image resource created: %s.\n", filename.c_str() );
 			rsrc = std::make_shared<T>( std::string( RESOURCE_DIR ) + filename );
 			cache.emplace( std::make_pair( filename, rsrc ) );
 		}

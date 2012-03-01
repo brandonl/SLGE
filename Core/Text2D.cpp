@@ -32,14 +32,14 @@ Text2::~Text2()
 	glDeleteTextures( 1, &name );
 }
 
-const std::vector<Vertex> Text2::buildStaticString( const std::string& msg, glm::vec2 pos, const Color& col, float size ) const
+const VertList Text2::buildStaticString( const std::string& msg, glm::vec2 pos, const Color& col, float size ) const
 {
 	static float scale = 1.f;
 	if( size )
 		scale = TTF_DEFAULT_PIXEL_HEIGHT/size;
 	glScalef( scale, scale, 0.f );
 
-	std::vector<Vertex> vertsTmp;
+	VertList vertsTmp;
 	vertsTmp.reserve( msg.size() * 4 );
 
 	for( auto cx = msg.begin(); cx != msg.end(); ++cx )
@@ -63,7 +63,7 @@ void Text2::immediateDrawString( const std::string& msg, glm::vec2 pos, const Co
 		scale = TTF_DEFAULT_PIXEL_HEIGHT/size;
 	glScalef( scale, scale, 0.f );
 
-	std::vector< Vertex > vertsTmp;
+	VertList vertsTmp;
 	vertsTmp.reserve( msg.size() * 4 );
 
 	for( auto cx = msg.begin(); cx != msg.end(); ++cx )

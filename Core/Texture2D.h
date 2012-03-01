@@ -4,28 +4,29 @@
 #include <string>
 #include <windows.h>
 #include <gl/gl.h>
-#include "Utils.h"
 #include "ImageRef.h"
+#include "Utils.h"
 
 namespace slge
 {
-	class Texture2 : private Uncopyable
+	class Texture2 : public Uncopyable
 	{
 		public:
 			explicit Texture2( const ImageRef &&iref );
+			explicit Texture2( const std::string &imageFileName );
 			~Texture2();
 
 			void bind() const;
 			void unbind() const;
 
-			const int		getWidth() const;
-			const int		getHeight() const;
+			const int		getHWidth() const;
+			const int		getHHeight() const;
 			const GLuint	getId() const;
 
 		private:
 			GLuint name;
-			int width;
-			int height;
+			int hwidth;
+			int hheight;
 	};
 
 	inline void Texture2::bind() const
@@ -41,14 +42,14 @@ namespace slge
 		glBindTexture( GL_TEXTURE_2D, 0 );
 	}
 
-	inline const int Texture2::getWidth() const
+	inline const int Texture2::getHWidth() const
 	{
-		return width;
+		return hwidth;
 	}
 
-	inline const int Texture2::getHeight() const
+	inline const int Texture2::getHHeight() const
 	{
-		return height;
+		return hheight;
 	}
 
 	inline const GLuint Texture2::getId() const

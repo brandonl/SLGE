@@ -5,6 +5,7 @@
 #include <gl/gl.h>
 #include "Color.h"
 #include <array>
+#include <vector>
 
 namespace slge
 {
@@ -17,5 +18,6 @@ namespace slge
 		std::array<GLfloat, 2> texCoord;
 		std::array<GLfloat, 4> vColor;
 	};
+	typedef std::vector<Vertex> VertList;
 };
 #endif

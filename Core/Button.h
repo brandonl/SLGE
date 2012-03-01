@@ -1,41 +1,102 @@
-#ifndef BUTTON_H
-#define BUTTON_H
+#ifndef __BUTTON_H__
+#define __BUTTON_H__
 
-#if defined(_MSC_VER)&&(_MSC_VER>=1200)
-#pragma once
-#endif
-
-#include "Font.h"
 #include <string>
-
-#include "Vertex.h"
-#include "Label.h"
-#include <vector>
+#include <glm/glm.hpp>
 
 namespace slge
 {
-	class Button
+	template <class T>
+	class Button // : public Entity
 	{
-		//public:
-		//	explicit Button() {};
-		//	// Keep width and height -1 if you want the Button to be the exact width of the text string (Label)...
-		//	explicit Button( const std::string &text, Font *f, const glm::vec2 &center, const Color& col = Color(), float width = -1, float height = -1 );
-		//	~Button();
+		public:
+			explicit Button( const T &&type, float padding = 0.f );
+			~Button();
 
-		//	void draw() const;
-		//	bool update();
-		//	bool isClicked() const;
-		//	bool isHot() const;
+			void draw() const;
+			bool update();
+			bool isClicked() const;
+			bool isHot() const;
 
-		//	Label tag;
-		//	glm::vec2 center;
-		//	//std::vector<Vertex> vertices;
-		//	float width;
-		//	float height;
-		//	bool visible;
-		//	bool clicked;
-		//	bool hot;
+		private:
+			const T buttonType;
+			glm::vec2 center;
+			bool visible;
+			bool clicked;
+			bool hot;
+			float padding;
 	};
+
+	template <class T>
+	Button<T>::Button( const T &&type, float padding )
+		:	buttonType(type),
+			center(center),
+			visible(true),
+			hot(false),
+			clicked(false),
+			padding(padding)
+	{
+	}
+
+	template <class T>
+	Button<T>::~Button()
+	{
+	}
+
+	template <class T>
+	void Button<T>::draw() const
+	{
+		if( visible )
+		{
+			if( hot )
+			{
+				glEnable( GL_BLEND );
+				glColor4f( 1.0f, 1.0f, 1.0f, 0.5f );
+				glBegin( GL_QUADS );
+				glVertex2f( buttonType.getCenter().x - buttonType.getHWidth() - padding,	buttonType.getCenter().y - buttonType.getHHeight() - padding );
+				glVertex2f( buttonType.getCenter().x + buttonType.getHWidth() + padding,	buttonType.getCenter().y - buttonType.getHHeight() - padding  );
+				glVertex2f( buttonType.getCenter().x + buttonType.getHWidth() + padding,	buttonType.getCenter().y + buttonType.getHHeight() + padding  );
+				glVertex2f( buttonType.getCenter().x - buttonType.getHWidth() - padding,	buttonType.getCenter().y + buttonType.getHHeight() + padding  );
+				glEnd();
+				glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
+				glDisable( GL_BLEND );
+			}
+
+			buttonType.draw();
+		}
+	}
+
+	template <class T>
+	bool Button<T>::update()
+	{
+		glm::vec2 mp( Input::getMousePosition().x, Input::getMousePosition().y  );
+		hot = false;
+		clicked = false;
+
+		if(	mp.x > ( buttonType.getCenter().x - buttonType.getHWidth() - padding ) &&
+				mp.x < ( buttonType.getCenter().x + buttonType.getHWidth() + padding ) && 
+				mp.y > ( buttonType.getCenter().y - buttonType.getHHeight() - padding ) && 
+				mp.y < ( buttonType.getCenter().y + buttonType.getHHeight() + padding ) 
+			)
+			hot = true;
+
+		if( hot && Input::isMouseButtonPressed( Input::MOUSE_LEFT ) )
+			clicked = true;
+
+		return clicked;
+	}
+
+	template <class T>
+	inline bool Button<T>::isClicked() const
+	{
+		return clicked;
+	}
+
+	template <class T>
+	inline bool Button<T>::isHot() const
+	{
+		return hot;
+	}
 };
 
 #endif

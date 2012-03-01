@@ -28,13 +28,13 @@ void Scene::add( Entity *ent )
 	entities.emplace_back( std::unique_ptr<Entity>( ent ) );
 }
 
-void Scene::doUpdate()
+void Scene::baseUpdate()
 {
 	std::for_each( entities.begin(), entities.end(),
 						[]( std::unique_ptr<Entity>& e ){ e->update(); } );
 }
 
-void Scene::doDraw()
+void Scene::baseDraw()
 {
 		std::for_each( entities.begin(), entities.end(),
 							[]( std::unique_ptr<Entity>& e ){ e->draw(); } );

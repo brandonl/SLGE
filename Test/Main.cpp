@@ -8,8 +8,14 @@ using namespace slge;
 
 int main()
 {
-	App env( std::string( "SLGE" ), 480u, 640u );
-	env.set( new SplashScreen() );
-	env.run();
+	{
+		App env( std::string( "SLGE" ), 480u, 640u );
+		env.set( new SplashScreen() );
+		env.run();
+	}
+
+#ifndef NDEBUG
+	char pauseForDEBUG = getchar();
+#endif
 	return 0;
 }

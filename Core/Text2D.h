@@ -4,12 +4,11 @@
 #include <string>
 #include <windows.h>
 #include <gl/gl.h>
-#include "Utils.h"
 #include "Vertex.h"
 #include "FontRef.h"
 #include <glm/glm.hpp>
-#include <vector>
 #include "Color.h"
+#include "Utils.h"
 
 namespace slge
 {
@@ -19,7 +18,7 @@ namespace slge
 			explicit Text2( const FontRef &&fref );
 			~Text2();
 
-			const std::vector<Vertex> buildStaticString( const std::string& msg, glm::vec2 pos, const Color& col = Color(), float size = 0.f ) const;
+			const VertList buildStaticString( const std::string& msg, glm::vec2 pos, const Color& col = Color(), float size = 0.f ) const;
 			void immediateDrawString( const std::string& msg, glm::vec2 pos, const Color& col = Color(), float size = 0.f ) const;
 			void bind() const;
 			void unbind() const;

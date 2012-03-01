@@ -11,7 +11,12 @@ namespace slge
 	static const int		TTF_FONT_WIDTH = 512;
 	static const int		TTF_FONT_HEIGHT = 512;
 
-	static const char*	RESOURCE_DIR = "../../Resources/";
+	static const float PI			= 3.14159265358979f;
+	static const float RAD2DEG		= 57.29578f;
+	static const float DEG2RAD		= 0.01745329f;
+
+	static const char* RESOURCE_DIR = "../../Resources/";
+
 };
 
 #endif

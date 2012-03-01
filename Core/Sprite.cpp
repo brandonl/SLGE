@@ -1,78 +1,33 @@
 #include "Sprite.h"
-#include <iostream>
-#include "World.h"
-#include "Defines.h"
+#include "Settings.h"
+#include "Texture2D.h"
+#include <algorithm>
+#include <functional>
 
 using namespace slge;
 
-Sprite::Animation::Animation( const std::string &name, unsigned int start, unsigned int end, unsigned int level, float speed )
+//--------------------------------------------------------------Animated Sprite :: Animation-------
+
+AnimatedSprite::Animation::Animation( const std::string &name, unsigned int start, unsigned int end, unsigned int level, float speed )
 	:	name(name),
 		frame(start),
 		start(start),
 		end(end),
 		level(level),
 		speed(speed),
-		lastUpdate(0.0f)
+		lastUpdate(0.f)
 {
 }
 
-Sprite::Sprite( const std::string& path, float w, float h, int tw, int th, const Color& col )
-	:	width(w),
-		height(h),
-		tw(tw),
-		th(th),
-		visible(true),
-		vertices( 4 ),
-		anims( 4 ),
-		currentAnim(0)
+//--------------------------------------------------------------------Animated Sprite-------------
+
+void AnimatedSprite::doUpdate()
 {
-	sheet = Resources::grabTexture( path );
-	texOffset = glm::vec2( 0.0f, 0.0f );
-	texScale = glm::vec2( width/tw, height/th );
-	float halfw = getHwidth();
-	float halfh = getHheight();
-	vertices[0] = Vertex( -halfw,	-halfh,	texOffset.x,				texOffset.y,				col );
-	vertices[1] = Vertex( halfw,	-halfh,	texOffset.x + texScale.x, texOffset.y,				col );
-	vertices[2] = Vertex( halfw,	halfh, texOffset.x + texScale.x,	texOffset.y + texScale.y,	col );
-	vertices[3] = Vertex( -halfw,	halfh, texOffset.x,				texOffset.y + texScale.y, col );
-}
-
-Sprite::~Sprite()
-{
-}
-
-void Sprite::draw()
-{
-	if( visible )
-	{
-		glEnable( GL_BLEND );
-		sheet->bind();
-
-		glEnableClientState( GL_VERTEX_ARRAY );
-		glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-		glEnableClientState( GL_COLOR_ARRAY );
-
-		glVertexPointer( 2, GL_FLOAT, sizeof(Vertex), &vertices[0].position );
-		glTexCoordPointer( 2, GL_FLOAT, sizeof(Vertex), &vertices[0].texcoord );
-		glColorPointer( 4, GL_FLOAT, sizeof(Vertex), &vertices[0].vcolor );
-		glDrawArrays( GL_QUADS, 0, 4 );
-
-		glDisableClientState( GL_VERTEX_ARRAY );
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		glDisableClientState(GL_COLOR_ARRAY);
-
-		sheet->unbind();
-		glDisable( GL_BLEND );
-	}
-}
-
-void Sprite::update()
-{
-	if( visible )
+	if( isVisible() )
 	{
 		if( currentAnim )
 		{
-			currentAnim->lastUpdate += DELTA_TIME;
+			currentAnim->lastUpdate += static_cast<float>( DELTA_TIME );
 			if( currentAnim->lastUpdate < ( 1.0f / currentAnim->speed ) )
 				return;
 
@@ -80,54 +35,101 @@ void Sprite::update()
 			if( currentAnim->frame > currentAnim->end )
 				currentAnim->frame = currentAnim->start;
 
-			int x = (int)currentAnim->frame % (int)( tw / ( width ) );
+			int x = static_cast<int>( currentAnim->frame ) % 
+											( ( textureSheet.getHWidth() << 1 ) / 
+												static_cast<int>( hwidth * 2.f ) );
 			int y = currentAnim->level;
-			texOffset = glm::vec2( ( x * width ) / tw, ( y * height ) / th );
+			texOffset = glm::vec2(	( x * hwidth * 2.f ) / 
+											( textureSheet.getHWidth() << 1 ),
+											( y * hheight * 2.f ) / 
+											( textureSheet.getHHeight() << 1 ) 
+										 );
 
-			vertices[0].texcoord[0] = texOffset.x;					vertices[0].texcoord[1] = texOffset.y;
-			vertices[1].texcoord[0] = texOffset.x + texScale.x;	vertices[1].texcoord[1] = texOffset.y;
-			vertices[2].texcoord[0] = texOffset.x + texScale.x;	vertices[2].texcoord[1] = texOffset.y + texScale.y;
-			vertices[3].texcoord[0] = texOffset.x;					vertices[3].texcoord[1] = texOffset.y + texScale.y;
+			quad[0].texCoord[0] = texOffset.x;					
+			quad[0].texCoord[1] = texOffset.y;
+			quad[1].texCoord[0] = texOffset.x + texScale.x;	
+			quad[1].texCoord[1] = texOffset.y;
+			quad[2].texCoord[0] = texOffset.x + texScale.x;	
+			quad[2].texCoord[1] = texOffset.y + texScale.y;
+			quad[3].texCoord[0] = texOffset.x;					
+			quad[3].texCoord[1] = texOffset.y + texScale.y;
 			currentAnim->lastUpdate = 0;
 		}
 	}
 }
 
-void Sprite::add( const std::string &anim, unsigned int start, unsigned int end, unsigned int level, float speed )
+void AnimatedSprite::add(	const std::string &anim, unsigned int start, 
+									unsigned int end, unsigned int level, float speed 
+								)
 {
 	anims.push_back( Animation( anim, start, end, level, speed ) );
 }
 
-void Sprite::play( const std::string &anim )
+void AnimatedSprite::play( const std::string &anim )
 {
 	currentAnim = get( anim );
 }
 
-void Sprite::stop( const std::string &anim )
+void AnimatedSprite::stop( const std::string &anim )
 {
 	currentAnim = 0;
 }
 
-Sprite::Animation *Sprite::get( const std::string &anim )
+AnimatedSprite::Animation *AnimatedSprite::get( const std::string &anim )
 {
-	for( std::list<Animation>::iterator i = anims.begin(); i != anims.end(); ++i )
+	auto ix = std::find_if( anims.begin(), anims.end(), 
+									[&]( const Animation &s ) -> bool
+									{
+										return s.name == anim;
+									} 
+								);
+	if( ix == anims.end() )
+		return nullptr;
+
+	return &(*ix);
+}
+
+//--------------------------------------------------------------------------Sprite-------------
+
+Sprite::Sprite( const Texture2 &textureSheet, float width, float height, const Color& col )
+	:	textureSheet( textureSheet ),
+		hwidth(width/2.f),
+		hheight(height/2.f),
+		visible(true)
+{
+	if( width < 0.f ) hwidth = textureSheet.getHWidth();
+	if( height < 0.f ) hheight = textureSheet.getHHeight();
+	texOffset = glm::vec2( 0.0f, 0.0f );
+	texScale = glm::vec2(	width / ( textureSheet.getHWidth() << 1 ), 
+									height / ( textureSheet.getHHeight() << 1 ) );
+	quad.reserve(4);
+	quad.emplace_back( Vertex( -hwidth,	-hheight, texOffset.x,					texOffset.y,					col ) );
+	quad.emplace_back( Vertex(  hwidth,	-hheight, texOffset.x + texScale.x, texOffset.y,					col ) );
+	quad.emplace_back( Vertex(  hwidth,	 hheight, texOffset.x + texScale.x,	texOffset.y + texScale.y,	col ) );
+	quad.emplace_back( Vertex( -hwidth,	 hheight, texOffset.x,					texOffset.y + texScale.y,	col ) );
+}
+
+void Sprite::doDraw() const
+{
+	if( isVisible() )
 	{
-		if( i->name == anim )
-		{
-			return &(*i);
-		}
+		glEnable( GL_BLEND );
+		textureSheet.bind();
+
+		glEnableClientState( GL_VERTEX_ARRAY );
+		glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+		glEnableClientState( GL_COLOR_ARRAY );
+
+		glVertexPointer( 2, GL_FLOAT, sizeof(Vertex), &quad[0].position );
+		glTexCoordPointer( 2, GL_FLOAT, sizeof(Vertex), &quad[0].texCoord );
+		glColorPointer( 4, GL_FLOAT, sizeof(Vertex), &quad[0].vColor );
+		glDrawArrays( GL_QUADS, 0, 4 );
+
+		glDisableClientState( GL_VERTEX_ARRAY );
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glDisableClientState(GL_COLOR_ARRAY);
+
+		textureSheet.unbind();
+		glDisable( GL_BLEND );
 	}
-
-	std::cerr <<  "No Animation with the name: " << anim << std::endl;
-	return 0;
-}
-
-float Sprite::getHwidth() const
-{
-	return width / 2.0f;
-}
-
-float Sprite::getHheight() const
-{
-	return height / 2.0f;
 }

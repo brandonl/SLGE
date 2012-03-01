@@ -11,7 +11,6 @@ namespace slge
 		public:
 			explicit FontRef( const std::string& fn = "" )
 			{
-				printf( "New fontref\n" );
 				if( fn.size() )
 					Resources::request( fn, font );
 			}

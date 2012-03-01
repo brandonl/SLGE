@@ -43,7 +43,8 @@ Window::Window( const std::string& ntitle, int w, int h, int cdepth, int zdepth 
 
 	glEnable( GL_TEXTURE_2D );
 	glClearColor( 0.2f, 0.2f, 0.2f, 1.0f );
-
+	glDisable(GL_LIGHTING);
+	glCullFace(GL_BACK);
 	glDisable( GL_DEPTH_TEST );
 	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 }

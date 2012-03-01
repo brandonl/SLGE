@@ -2,7 +2,6 @@
 #define __LABEL_H__
 
 #include <string>
-#include <vector>
 #include "Quad.h"
 #include "Color.h"
 #include "Vertex.h"
@@ -19,25 +18,25 @@ namespace slge
 			~Label();
 
 			void draw() const;
-			const float			getWidth() const;
-			const float			getHeight() const;
+			const float			getHWidth() const;
+			const float			getHHeight() const;
 			const glm::vec2&	getCenter() const;
 
 		private:
 			const Text2 &textBuilder;
 			std::string text;
 			Quad bounds;
-			std::vector<Vertex> vertices;
+			VertList vertices;
 	};
 
-	inline const float Label::getWidth() const
+	inline const float Label::getHWidth() const
 	{
-		return bounds.width;
+		return bounds.hwidth;
 	}
 
-	inline const float Label::getHeight() const
+	inline const float Label::getHHeight() const
 	{
-		return bounds.height;
+		return bounds.hheight;
 	}
 	inline const glm::vec2&	Label::getCenter() const
 	{

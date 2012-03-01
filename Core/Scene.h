@@ -23,11 +23,14 @@ namespace slge
 
 			b2Body* createBody( const b2BodyDef &bodyDef );
 
-		protected:
-			virtual void doUpdate();
-			virtual void doDraw();
+		private:
+			virtual void doUpdate() = 0;
+			virtual void doDraw() = 0;
 
 		private:
+			void			baseUpdate();
+			void			baseDraw();
+
 			unsigned		entityIdCounter;
 			b2World		stage;
 			unsigned		drawLayer;
@@ -44,13 +47,17 @@ namespace slge
 
 	inline void Scene::update()
 	{
+		baseUpdate();
 		doUpdate();
 	}
 
 	inline void Scene::draw()
 	{
 		if( drawLayer == noDebug )
+		{	
 			doDraw();
+			baseDraw();
+		}
 		else
 			stage.DrawDebugData();
 	}

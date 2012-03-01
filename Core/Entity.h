@@ -22,14 +22,27 @@ namespace slge
 				printf( "Destroying entity: %s\n", tag.c_str() );
 			}
 
-			virtual void update() = 0;
-			virtual void draw() const = 0;
-			virtual void onCollission( Entity *collider ) = 0;
-			virtual const b2Vec2& getPos() const = 0;
+			void update()
+			{
+				doUpdate();
+			}
 
-			unsigned int id;
+			void draw() const
+			{
+				doDraw();
+			}
+
+		private:
+			virtual void doUpdate() = 0;
+			virtual void doDraw() const = 0;
+			//virtual void onCollission( Entity *collider ) = 0;
+			//virtual const b2Vec2& getPos() const = 0;
+
+			unsigned id;
 			std::string tag;
 			bool condemned;
+
+			friend class Scene;
 	};
 };
 #endif

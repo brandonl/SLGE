@@ -1,3 +1,10 @@
+//
+// WARNING: The function: stbtt_GetBakedQuad
+// has been modified ever so slightly by removing the yoffset to make it easier to align
+// bounding boxes around font strings...
+//
+//
+//
 // stb_truetype.h - v0.3 - public domain - 2009 Sean Barrett / RAD Game Tools
 //
 //   This library processes TrueType files:
@@ -1631,7 +1638,7 @@ void stbtt_GetBakedQuad(stbtt_bakedchar *chardata, int pw, int ph, int char_inde
    float ipw = 1.0f / pw, iph = 1.0f / ph;
    stbtt_bakedchar *b = chardata + char_index;
    int round_x = STBTT_ifloor((*xpos + b->xoff) + 0.5);
-   int round_y = STBTT_ifloor((*ypos + b->yoff) + 0.5);
+   int round_y = STBTT_ifloor(*ypos);//Not sure why this happens? (*ypos + b->yoff) + 0.5);
 
    q->x0 = round_x + d3d_bias;
    q->y0 = round_y + d3d_bias;

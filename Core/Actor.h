@@ -10,17 +10,17 @@ namespace slge
 {
 	class Actor : public Entity, private Uncopyable
 	{
-		public:
-			explicit Actor( const std::string& tag = "" );
-			virtual ~Actor() = 0;
+		//public:
+		//	explicit Actor( const std::string& tag = "" );
+		//	virtual ~Actor() = 0;
 
-			virtual void update();
-			virtual void draw() const;
-			const b2Vec2& getPos() const;
-			virtual void handleSpecial();
+		//	virtual void update();
+		//	virtual void draw() const;
+		//	const b2Vec2& getPos() const;
+		//	virtual void handleSpecial();
 
-			b2Body *body;
-			std::auto_ptr<Sprite> graphic;
+		//	b2Body *body;
+		//	std::auto_ptr<Sprite> graphic;
 	};
 };
 

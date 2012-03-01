@@ -12,22 +12,14 @@ Label::Label( const Text2 &textBuilder, const std::string &text, const glm::vec2
 		text(text),
 		bounds(center)
 {
-	//float miny = 80000.0f, maxy = 0.0f;
-	//		miny = gdata.y0 < miny ? gdata.y0 : miny;
-	//		maxy = gdata.y1 > maxy ? gdata.y1 : maxy;
-	//	}
-	//}
-	//aabb = Rect( 0.0f, miny, x, maxy + ( miny > 0.0f ? miny : miny * -1.0f ) );
-
 	vertices = textBuilder.buildStaticString( text, center, col, size );
-	//std::for_each( vertices.begin(), vertices.end(), 
-	//					[&center]( Vertex &v )
-	//					{ 
-	//						printf( "Procesing.." ); 
-	//						v.position[0] *= center.x;
-	//						v.position[1] *= center.y;
-	//					}
-	//				);
+	//	Centering:This position is gaurenteed the largest x,y based on Tex2D creation.
+	// Not safe if things change; switch to std::max_element.
+	bounds.hwidth = ( ( vertices.end() - 2 )->position[0] - center.x ) / 2.f;
+	bounds.hheight = ( ( vertices.end() - 2 )->position[1] - center.y ) / 2.f;
+
+	std::for_each(	vertices.begin(), vertices.end(), 
+						[=]( Vertex &v ){ v.position[0] += -bounds.hwidth; v.position[1] += -bounds.hheight; } );
 }
 
 Label::~Label()
@@ -39,7 +31,6 @@ void Label::draw() const
 	glEnable( GL_BLEND );
 	textBuilder.bind();
 	glPushMatrix();
-	glTranslatef( 50.f, 50.f, 0.0f );
 
 		glEnableClientState( GL_VERTEX_ARRAY );
 		glEnableClientState( GL_TEXTURE_COORD_ARRAY );
