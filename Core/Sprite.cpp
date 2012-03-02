@@ -36,8 +36,8 @@ void AnimatedSprite::doUpdate()
 				currentAnim->frame = currentAnim->start;
 
 			int x = static_cast<int>( currentAnim->frame ) % 
-											( ( textureSheet.getHWidth() << 1 ) / 
-												static_cast<int>( hwidth * 2.f ) );
+											(	( textureSheet.getHWidth() << 1 ) / 
+												( hwidth << 1 ) );
 			int y = currentAnim->level;
 			texOffset = glm::vec2(	( x * hwidth * 2.f ) / 
 											( textureSheet.getHWidth() << 1 ),
@@ -90,18 +90,25 @@ AnimatedSprite::Animation *AnimatedSprite::get( const std::string &anim )
 }
 
 //--------------------------------------------------------------------------Sprite-------------
+float clamp( float num, float min, float max )
+{
+	return ( num < min ) ? min : ( num > max ) ? max : num;
+}
 
-Sprite::Sprite( const Texture2 &textureSheet, float width, float height, const Color& col )
+Sprite::Sprite( const Texture2 &textureSheet, int width, int height, const Color& col )
 	:	textureSheet( textureSheet ),
-		hwidth(width/2.f),
-		hheight(height/2.f),
+		hwidth(width >> 1),
+		hheight(height >> 1),
 		visible(true)
 {
-	if( width < 0.f ) hwidth = textureSheet.getHWidth();
-	if( height < 0.f ) hheight = textureSheet.getHHeight();
+	if( width < 0 ) hwidth = textureSheet.getHWidth();
+	if( height < 0 ) hheight = textureSheet.getHHeight();
 	texOffset = glm::vec2( 0.0f, 0.0f );
-	texScale = glm::vec2(	width / ( textureSheet.getHWidth() << 1 ), 
-									height / ( textureSheet.getHHeight() << 1 ) );
+	texScale = glm::vec2(	1.f * width  / ( textureSheet.getHWidth() << 1  ), 
+									1.f * height / ( textureSheet.getHHeight() << 1 ) );
+	if( width < 0 ) texScale.x = 1.f;
+	if( height < 0 ) texScale.y = 1.f;
+
 	quad.reserve(4);
 	quad.emplace_back( Vertex( -hwidth,	-hheight, texOffset.x,					texOffset.y,					col ) );
 	quad.emplace_back( Vertex(  hwidth,	-hheight, texOffset.x + texScale.x, texOffset.y,					col ) );

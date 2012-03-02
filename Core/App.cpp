@@ -41,7 +41,7 @@ void App::run()
 			}
 
 			scene->update();
-			timeSinceLastUpdate = 0;
+			timeSinceLastUpdate = 0.0;
 		}
 
 		window.clear();
@@ -53,7 +53,7 @@ void App::run()
 	window.close();
 }
 
-double App::getFPS()
+std::string App::getFPS()
 {
    static std::string title = "";
    static double FPS = 60.;
@@ -69,11 +69,9 @@ double App::getFPS()
 		std::stringstream ss;
 		ss << FPS << " FPS";
 		ss >> title;
-		 //TODO: Remove setting Title
-		Window::setTitle(title);
 		FPS = 0.;
    }
-	return FPS;
+	return title;
 }
 
 double App::getGameSpeed()

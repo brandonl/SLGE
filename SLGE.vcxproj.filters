@@ -158,8 +158,17 @@
     <ClInclude Include="Core\Sprite.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\PositionComponent.h">
+    <ClInclude Include="Core\PhysicsComponent.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\SpatialComponent.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Test\Player.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Test\Environment.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

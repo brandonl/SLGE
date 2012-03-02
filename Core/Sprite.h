@@ -14,7 +14,7 @@ namespace slge
 		public:
 			// Using string version will cause a new texture to be loaded in the GPU even if 
 			// the image was already cached. Simply here for a convienence.
-			Sprite( const Texture2 &textureSheet, float width, float height, const Color& = Color() );
+			Sprite( const Texture2 &textureSheet, int width, int height, const Color& = Color() );
 
 			void draw() const
 			{
@@ -26,12 +26,12 @@ namespace slge
 				doUpdate();
 			}
 
-			const float getHWidth() const
+			const int getHWidth() const
 			{
 				return hwidth;
 			}
 
-			const float getHHeight() const
+			const int getHHeight() const
 			{
 				return hheight;
 			}
@@ -53,8 +53,8 @@ namespace slge
 		protected:
 			const Texture2 &textureSheet;
 			VertList quad;
-			float hwidth;
-			float hheight;
+			int hwidth;
+			int hheight;
 			bool visible;
 			glm::vec2 texOffset;
 			glm::vec2 texScale;
@@ -63,7 +63,7 @@ namespace slge
 	class StaticSprite : public Sprite
 	{
 		public:
-			StaticSprite( const Texture2 &textureSheet, float width = -1.f, float height = -1.f, const Color& col = Color() )
+			StaticSprite( const Texture2 &textureSheet, int width = -1, int height = -1, const Color& col = Color() )
 				: Sprite( textureSheet, width, height, col ){}
 
 		private:
@@ -86,7 +86,7 @@ namespace slge
 		};
 
 		public:
-			AnimatedSprite( const Texture2 &textureSheet, float width = -1.f, float height = -1.f, const Color& col = Color() )
+			AnimatedSprite( const Texture2 &textureSheet, int width = -1, int height = -1, const Color& col = Color() )
 				:	Sprite( textureSheet, width, height, col ),
 					currentAnim(nullptr)
 			{}

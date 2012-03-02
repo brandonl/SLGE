@@ -12,6 +12,7 @@ namespace slge
 	class Texture2 : public Uncopyable
 	{
 		public:
+			Texture2(){}
 			explicit Texture2( const ImageRef &&iref );
 			explicit Texture2( const std::string &imageFileName );
 			~Texture2();

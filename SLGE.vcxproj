@@ -110,7 +110,7 @@
     <ClInclude Include="Core\Button.h" />
     <ClInclude Include="Core\Color.h" />
     <ClInclude Include="Core\Label.h" />
-    <ClInclude Include="Core\PositionComponent.h" />
+    <ClInclude Include="Core\PhysicsComponent.h" />
     <ClInclude Include="Core\Settings.h" />
     <ClInclude Include="Core\Entity.h" />
     <ClInclude Include="Core\Font.h" />
@@ -123,6 +123,7 @@
     <ClInclude Include="Core\Resource.h" />
     <ClInclude Include="Core\ResourceModule.h" />
     <ClInclude Include="Core\Scene.h" />
+    <ClInclude Include="Core\SpatialComponent.h" />
     <ClInclude Include="Core\Sprite.h" />
     <ClInclude Include="Core\stb_image.hpp" />
     <ClInclude Include="Core\stb_truetype.h" />
@@ -132,6 +133,8 @@
     <ClInclude Include="Core\Vertex.h" />
     <ClInclude Include="Core\Window.h" />
     <ClInclude Include="Test\Earth.h" />
+    <ClInclude Include="Test\Environment.h" />
+    <ClInclude Include="Test\Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

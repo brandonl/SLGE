@@ -21,7 +21,7 @@ namespace slge
 			void run();
 			void set( Scene* scene );
 
-			static double getFPS();
+			static std::string getFPS();
 			static double getGameSpeed();
 	
 		private:
@@ -33,6 +33,7 @@ namespace slge
 	inline void App::set( Scene* s )
 	{
 		scene.reset( s );
+		s->loadGameEntities();
 	}
 };
 #endif

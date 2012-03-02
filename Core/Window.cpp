@@ -2,6 +2,7 @@
 #include <GL/glfw.h>
 #include "Window.h"
 #include <cstdio>
+#include "Settings.h"
 
 using namespace slge;
 
@@ -42,7 +43,7 @@ Window::Window( const std::string& ntitle, int w, int h, int cdepth, int zdepth 
 	glLoadIdentity();
 
 	glEnable( GL_TEXTURE_2D );
-	glClearColor( 0.2f, 0.2f, 0.2f, 1.0f );
+	glClearColor( CLEAR_COLOR.r, CLEAR_COLOR.g, CLEAR_COLOR.b, CLEAR_COLOR.a );
 	glDisable(GL_LIGHTING);
 	glCullFace(GL_BACK);
 	glDisable( GL_DEPTH_TEST );

@@ -7,19 +7,25 @@
 
 namespace slge
 {
-	class Scene;
-
 	class Entity // : public Node
 	{
 		public:
-			explicit Entity( const std::string tag = "" ) : tag(tag), condemned(false) 
+			explicit Entity( const std::string groupName = "", Scene *parent = nullptr ) 
+				:  group(groupName), 
+					condemned(false),
+					parent(parent)
 			{
-				printf( "Create entity: %s\n", tag.c_str() );
+				printf( "Create entity: %s\n", group.c_str() );
 			}
 
 			virtual ~Entity() 
 			{ 
-				printf( "Destroying entity: %s\n", tag.c_str() );
+				printf( "Destroying entity: %s\n", group.c_str() );
+			}
+
+			void load()
+			{
+				doLoad();
 			}
 
 			void update()
@@ -32,15 +38,25 @@ namespace slge
 				doDraw();
 			}
 
+			void setParent( const Scene *p )
+			{
+				parent = p;
+			}
+
+			const Scene* getParent() const
+			{
+				return parent;
+			}
+
 		private:
+			virtual void doLoad() = 0;
 			virtual void doUpdate() = 0;
 			virtual void doDraw() const = 0;
-			//virtual void onCollission( Entity *collider ) = 0;
-			//virtual const b2Vec2& getPos() const = 0;
 
 			unsigned id;
-			std::string tag;
+			std::string group;
 			bool condemned;
+			const Scene *parent;
 
 			friend class Scene;
 	};

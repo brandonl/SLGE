@@ -12,30 +12,37 @@ namespace slge
 
 	class Scene : public b2ContactListener, private Uncopyable
 	{
+		typedef std::vector< std::unique_ptr<Entity>> EntityList;
+
 		public:
 			Scene();
 			virtual ~Scene();
 
 			void add( Entity* ent );
+			void loadGameEntities();
 			void update();
 			void draw();
 			void changeLayer( unsigned l );
+			void BeginContact( b2Contact* contact );
+			void EndContact( b2Contact* contact );
 
-			b2Body* createBody( const b2BodyDef &bodyDef );
+			b2Body* createBody( const b2BodyDef &bodyDef ) const;
 
 		private:
 			virtual void doUpdate() = 0;
 			virtual void doDraw() = 0;
+			virtual void doLoadGameEntities() = 0;
 
 		private:
+			void			baseLoadGameEntities();
 			void			baseUpdate();
 			void			baseDraw();
 
 			unsigned		entityIdCounter;
-			b2World		stage;
+			mutable		b2World		stage;
 			unsigned		drawLayer;
 			DebugDraw	debugDraw;
-			std::vector< std::unique_ptr<Entity> > entities;
+			EntityList	entities;
 
 		public:
 			enum
@@ -45,6 +52,12 @@ namespace slge
 			};
 	};
 
+	inline void Scene::loadGameEntities()
+	{
+		baseLoadGameEntities();
+		doLoadGameEntities();
+	}
+
 	inline void Scene::update()
 	{
 		baseUpdate();
@@ -53,16 +66,15 @@ namespace slge
 
 	inline void Scene::draw()
 	{
-		if( drawLayer == noDebug )
-		{	
-			doDraw();
-			baseDraw();
-		}
-		else
+		doDraw();
+#ifdef NDEBUG
+		if( drawLayer == debug )
+#endif
 			stage.DrawDebugData();
+		//baseDraw();
 	}
 
-	inline b2Body* Scene::createBody( const b2BodyDef &bodyDef )
+	inline b2Body* Scene::createBody( const b2BodyDef &bodyDef ) const
 	{
 		return stage.CreateBody( &bodyDef );
 	}
