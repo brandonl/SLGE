@@ -25,13 +25,11 @@ class SplashScreen : public Scene
 				background( ImageRef("Test.png") ),
 				splash( background ),
 				bgPos( CENTER_X, CENTER_Y ),
-				newGame( Label( proggyTexter, "A N A T H A N E M", WINDOW_CENTER, Color::orange ), 10.f )
+				newGame( Label( proggyTexter, "A N A T H N E M", WINDOW_CENTER, Color::orange ), 10.f )
 		{
 			add( new Player() );
 			add( new Wall( 0.f, 101.f, WINDOW_WIDTH, 101.f ) );
-			add( new Wall( 0.f, 0.f, 0.f, WINDOW_HEIGHT ) );
-			add( new Wall( WINDOW_WIDTH - 0.5f, 0.f, WINDOW_WIDTH - 0.5f, WINDOW_HEIGHT ) );
-			add( new Wall( 0.f, 539.f, WINDOW_WIDTH, 539.f ) );
+			add( new Terrain( 50, 45.f, 20.f ));
 		}
 
 	private:

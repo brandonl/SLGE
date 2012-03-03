@@ -4,7 +4,7 @@
 using namespace slge;
 
 //Does not exhibit perfect fowarding.
-App::App( const std::string&& name, unsigned && width, unsigned&& height ) 
+App::App( const std::string& name, unsigned width, unsigned height ) 
 	:	window( Window( name, width, height, 32, 24 ) )
 {
 	input.init();

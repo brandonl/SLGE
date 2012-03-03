@@ -2,14 +2,14 @@
 #define VC_LEANMEAN
 
 #include "App.h"
-
+#include "Settings.h"
 #include "Earth.h"
 using namespace slge;
 
 int main()
 {
 	{
-		App env( std::string( "SLGE" ), 480u, 640u );
+		App env( std::string( "SLGE" ), INIT_WINDOW_WIDTH, INIT_WINDOW_HEIGHT );
 		env.set( new SplashScreen() );
 		env.run();
 	}

@@ -17,14 +17,14 @@ class Player : public slge::Entity
 	public:
 		Player()
 			:	slge::Entity( "Player" ),
-				playerTexture( slge::ImageRef( "Ogmo.png" ) ),
-				sprite( playerTexture, 32, 32 ),
-				position( static_cast<float>( CENTER_X ), static_cast<float>( CENTER_Y ) )
+				playerTexture( slge::ImageRef( "ITSP.png" ) ),
+				sprite( playerTexture ),
+				spatial( static_cast<float>( CENTER_X ), static_cast<float>( CENTER_Y ) )
 		{
-				sprite.add( "Stand", 0, 0, 0, 0.0f );
-				sprite.add( "Run", 0, 3, 0, 12.0f );
-				sprite.add( "Jump", 0, 0, 1, 0.0f );
-				sprite.play( "Run" );
+				//sprite.add( "Stand", 0, 0, 0, 0.0f );
+				//sprite.add( "Run", 0, 3, 0, 12.0f );
+				//sprite.add( "Jump", 0, 0, 1, 0.0f );
+				//sprite.play( "Run" );
 		}
 
 	private:
@@ -33,31 +33,22 @@ class Player : public slge::Entity
 				b2BodyDef bDef;
 				bDef.type = b2_dynamicBody;
 				bDef.userData = this;
-				bDef.position.Set(	position.getX() / slge::PTM_RATIO,
-											position.getY() / slge::PTM_RATIO );
+				bDef.position.Set(	spatial.getX() / slge::PTM_RATIO,
+											spatial.getY() / slge::PTM_RATIO );
 				bDef.angle = 0;
-				physicalBody = slge::PhysicsComponent( bDef, &position );
+				physicalBody = slge::PhysicsComponent( bDef, &spatial );
 			
 				b2FixtureDef fixtureDef;
-
 				b2PolygonShape actorBox;
-				actorBox.SetAsBox( ( sprite.getHWidth() - 6 ) / slge::PTM_RATIO, 
-											sprite.getHWidth() / slge::PTM_RATIO );
+
+				actorBox.SetAsBox( ( sprite.getHWidth() ) / slge::PTM_RATIO, 
+											sprite.getHHeight() / slge::PTM_RATIO );
 				fixtureDef.shape = &actorBox;
 				fixtureDef.density = 1.0f;
 				fixtureDef.restitution = 0.f;
 
 				physicalBody.getBody()->CreateFixture( &fixtureDef );
-				//physicalBody.getBody()->SetFixedRotation(true);
-				//physicalBody.getBody()->SetGravityScale( 8.0f );
-				//actorBox.SetAsBox( ( sprite.getHWidth() - 8.1f ) / PTM_RATIO, 
-				//							0.3f / PTM_RATIO, 
-				//							b2Vec2( 0, ( sprite.getHWidth() - 0.3f) / PTM_RATIO ), 0 );
-				// Create foot...
-				//fixtureDef.friction = 1.0f;
-				//b2Fixture* footSensorFixture = physicalBody.getBody()->CreateFixture(&fixtureDef);
-				//Special case looked for in World...
-				//footSensorFixture->SetUserData( (void*)FOOT );
+				physicalBody.getBody()->SetFixedRotation(true);
 		}
 
 		void doUpdate()
@@ -67,23 +58,19 @@ class Player : public slge::Entity
 
 			b2Vec2 vel = body()->GetLinearVelocity();
 			float bodyAngle = body()->GetAngle();
+			float desiredAngle = 15.f;
+         float change = 1 * slge::DEG2RAD;
 
-			if( slge::Input::isKeyHeld( slge::Input::UP ) && vel.y >= -18.f )
+			if( slge::Input::isKeyHeld( slge::Input::UP ) && vel.y >= -10.f )
 			{
-            float totalRotation = 90.f - bodyAngle;
-            while ( totalRotation < 180 * slge::DEG2RAD ) totalRotation += 360 * slge::DEG2RAD;
-            while ( totalRotation > 180 * slge::DEG2RAD ) totalRotation -= 360 * slge::DEG2RAD;
-            float change = 1 * slge::DEG2RAD; //allow 1 degree rotation per time step
-            float newAngle = bodyAngle + b2Min( change, b2Max(-change, totalRotation));
-            body()->SetTransform( body()->GetPosition(), newAngle );
-            body()->SetAngularVelocity(0);
-				//body()->SetTransform( b2Vec2( body()->Get, 0.f ), 50 * slge::DEG2RAD );
-				//body()->SetAngularVelocity( 35 * slge::DEG2RAD );
-				body()->ApplyForce( b2Vec2(0,-20), body()->GetWorldCenter() );
+				if( bodyAngle <= desiredAngle * slge::DEG2RAD )
+					body()->SetTransform( body()->GetPosition(), bodyAngle + change );
+				body()->ApplyForce( b2Vec2(0,-200), body()->GetWorldCenter() );
 			}
 			else
 			{
-				body()->SetAngularVelocity( slge::DEG2RAD );
+				if( bodyAngle > 0.001f )
+					body()->SetTransform( body()->GetPosition(), bodyAngle - change );
 			}
 			body()->SetLinearVelocity( b2Vec2( 0.f, vel.y ) );
 		}
@@ -91,7 +78,9 @@ class Player : public slge::Entity
 		void doDraw() const
 		{
 			glPushMatrix();
-			glTranslatef( position.getX(), position.getY(), 0.f );
+			glTranslatef( spatial.getX(), spatial.getY(), 0.f );
+			glRotatef( spatial.getAngle(), 0.f, 0.f, 1.f );
+			//glScalef();
 			sprite.draw();
 			glPopMatrix();
 		}
@@ -102,7 +91,7 @@ class Player : public slge::Entity
 
 		slge::Texture2 playerTexture;
 		slge::AnimatedSprite sprite;
-		slge::SpatialComponent position;
+		slge::SpatialComponent spatial;
 		slge::PhysicsComponent physicalBody;
 };
 

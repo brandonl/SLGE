@@ -12,7 +12,7 @@ namespace slge
 	struct Vertex
 	{
 		Vertex();
-		explicit Vertex( float x, float y, float u, float v, const Color& col = Color() );
+		Vertex( float x, float y, float u, float v, const Color& col = Color() );
 
 		std::array<GLfloat, 2> position;
 		std::array<GLfloat, 2> texCoord;

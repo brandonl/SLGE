@@ -8,8 +8,9 @@ namespace slge
 	class SpatialComponent
 	{
 		public:
-			SpatialComponent( float x = 0.f, float y = 0.f )
-				:	position( x, y )
+			SpatialComponent( float x = 0.f, float y = 0.f, float theta = 0.f )
+				:	position( x, y ),
+					angle(theta)
 			{}
 
 			void setX( float x )
@@ -32,8 +33,18 @@ namespace slge
 				return position.y;
 			}
 
+			void setAngle( float theta )
+			{
+				angle = theta;
+			}
+
+			const float getAngle() const
+			{
+				return angle;
+			}
 		private:
 			glm::vec2 position;
+			float angle;
 	};
 };
 

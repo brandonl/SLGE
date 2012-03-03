@@ -15,7 +15,7 @@ namespace slge
 	class App : private Uncopyable
 	{
 		public:
-			App( const std::string&& name, unsigned&& width, unsigned&& height );
+			App( const std::string& name, unsigned width, unsigned height );
 			~App();
 
 			void run();

@@ -71,7 +71,7 @@ namespace slge
 		if( drawLayer == debug )
 #endif
 			stage.DrawDebugData();
-		//baseDraw();
+		baseDraw();
 	}
 
 	inline b2Body* Scene::createBody( const b2BodyDef &bodyDef ) const

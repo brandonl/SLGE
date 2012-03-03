@@ -28,6 +28,7 @@ namespace slge
 				{
 					sp->setX( getXPosWorld() );
 					sp->setY( getYPosWorld() );
+					sp->setAngle( body->GetAngle() * slge::RAD2DEG );
 				}
 			}
 
