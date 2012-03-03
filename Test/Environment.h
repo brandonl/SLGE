@@ -68,23 +68,31 @@ class Terrain : public slge::Entity
 	private:
 		void doLoad()
 		{
-			std::vector< b2Vec2 > terrainBuffer;
-			for( size_t ix = 0; ix < slge::Window::getWidth(); ix += step )
+			std::vector< b2Vec2 > terrainBuffer1;
+			std::vector< b2Vec2 > terrainBuffer2;
+			for( size_t ix = 0, jx = slge::Window::getWidth(); ix <= slge::Window::getWidth(); ix += step, jx += step )
 			{
-				terrainBuffer.push_back( b2Vec2	( ix / slge::PTM_RATIO, 
-															( length * sin( ix * slge::DEG2RAD ) + 539.f ) / slge::PTM_RATIO ) );
+				terrainBuffer1.push_back( b2Vec2	( ix / slge::PTM_RATIO, 
+															( length * sin( ix * slge::DEG2RAD ) + 539.f )  / slge::PTM_RATIO ) );
+				terrainBuffer2.push_back( b2Vec2	( jx / slge::PTM_RATIO, 
+															( length * sin( jx * slge::DEG2RAD ) + 539.f ) / slge::PTM_RATIO ) );
 
 			}
 			b2BodyDef terrainBody;
 			b2FixtureDef terrainFixture;
 
-			terrainBody.position.Set( 0, 0 );
+			terrainBody.position.Set( 0, 0);
 			terrainBody.userData = this;
-			b2ChainShape polyChain;
-			polyChain.CreateChain( &terrainBuffer[0], terrainBuffer.size() );
-			terrainFixture.shape = &polyChain;
+			b2ChainShape polyChain1;
+			polyChain1.CreateChain( &terrainBuffer1[0], terrainBuffer1.size() );
+			terrainFixture.shape = &polyChain1;
 			terrainComponent1 = slge::PhysicsComponent( terrainBody );
 			terrainComponent1.getBody()->CreateFixture( &terrainFixture );
+
+
+			b2ChainShape polyChain2;
+			polyChain2.CreateChain( &terrainBuffer2[0], terrainBuffer2.size() );
+			terrainFixture.shape = &polyChain2;
 			terrainComponent2 = slge::PhysicsComponent( terrainBody );
 			terrainComponent2.getBody()->CreateFixture( &terrainFixture );
 		}
@@ -95,22 +103,13 @@ class Terrain : public slge::Entity
 
 		void doUpdate() 
 		{
-			if( slge::Input::isKeyPressed( slge::Input::UP ) )
-				hasGameStarted = true;
-
-			//if( hasGameStarted )
-			//{
-			//	//Start generating terrain
-			//	//if( currIndex != curve.size() )// currIndex = 0;
-			//	//{
-			//	//	curve[ currIndex++ ] = slge::Vertex( currPos.x, currPos.y, 1.f, 1.f, slge::Color::orange );
-
-			//	//	printf( "Pos: %f, %f.\n", currPos.x, currPos.y );
-			//	//	currPos.x -= step;
-			//	//	currPos.y = length * sin( currPos.x * slge::DEG2RAD );
-			//	//	++currUsage;
-			//	//}
-			//}
+			if( slge::Input::isKeyPressed( slge::Input::LEFT ) )
+			{
+				terrainComponent1.getBody()->SetTransform( b2Vec2( terrainComponent1.getBody()->GetWorldCenter().x - 5.f / slge::PTM_RATIO, 0.f ), 
+																		terrainComponent1.getBody()->GetAngle() );
+				terrainComponent2.getBody()->SetTransform( b2Vec2( terrainComponent2.getBody()->GetWorldCenter().x - 5.f / slge::PTM_RATIO, 0.f ), 
+																		terrainComponent2.getBody()->GetAngle() );
+			}
 		}
 
 	private:
