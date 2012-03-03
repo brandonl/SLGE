@@ -33,6 +33,7 @@ class Player : public slge::Entity
 				b2BodyDef bDef;
 				bDef.type = b2_dynamicBody;
 				bDef.userData = this;
+				bDef.allowSleep = false;
 				bDef.position.Set(	spatial.getX() / slge::PTM_RATIO,
 											spatial.getY() / slge::PTM_RATIO );
 				bDef.angle = 0;

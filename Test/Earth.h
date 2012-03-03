@@ -22,14 +22,14 @@ class SplashScreen : public Scene
 	public:
 		SplashScreen()
 			:	proggyTexter( FontRef( "ProggySquare.ttf" ) ),
-				background( ImageRef("Test.png") ),
+				background( ImageRef("FUCKYOUIMAREALIMAGE.png") ),
 				splash( background ),
 				bgPos( CENTER_X, CENTER_Y ),
-				newGame( Label( proggyTexter, "A N A T H N E M", WINDOW_CENTER, Color::orange ), 10.f )
+				newGame( Label( proggyTexter, "I ' M A B U T T O N", WINDOW_CENTER, Color::orange ), 10.f )
 		{
 			add( new Player() );
-			add( new Wall( 0.f, 101.f, WINDOW_WIDTH, 101.f ) );
-			add( new Terrain( 50, 45.f, 20.f ));
+			add( new Terrain( 50, 45.f, 20.f, 101.f ) );
+			add( new Terrain( 50, 45.f, 20.f, 539.f ) );
 		}
 
 	private:
@@ -44,10 +44,10 @@ class SplashScreen : public Scene
 
 		void doDraw()
 		{
-			glPushMatrix();
-			glTranslatef( bgPos.getX(), bgPos.getY(), 0.f );
-			splash.draw();
-			glPopMatrix();
+			//glPushMatrix();
+			//glTranslatef( bgPos.getX(), bgPos.getY(), 0.f );
+			//splash.draw();
+			//glPopMatrix();
 			proggyTexter.immediateDrawString( "FPS: " + App::getFPS(), vec2( 1.f, 11.f ) );
 			newGame.draw();
 		}
