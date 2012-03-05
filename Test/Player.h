@@ -26,9 +26,8 @@ class Player : public slge::Entity
 				upChange(0.5f * slge::DEG2RAD),
 				downChange(-0.5f * slge::DEG2RAD),
 				wobbleChange(0.2f * slge::DEG2RAD),
-				yVel( -150.f ),
-				gameStarted(false),
-				padding(6)
+				yVel( -120.f ),
+				gameStarted(false)
 		{
 				//sprite.add( "Stand", 0, 0, 0, 0.0f );
 				//sprite.add( "Run", 0, 3, 0, 12.0f );
@@ -52,18 +51,16 @@ class Player : public slge::Entity
 			
 				b2FixtureDef fixtureDef;
 				b2PolygonShape actorShape;
-				b2Vec2 verts[] = { b2Vec2( ( sprite.getHWidth() - padding ) / slge::PTM_RATIO,
-													( sprite.getHHeight() - padding ) / slge::PTM_RATIO 
+				b2Vec2 verts[] = { b2Vec2( (sprite.getHWidth()) / slge::PTM_RATIO,
+													(sprite.getHHeight() - 12) / slge::PTM_RATIO 
 												),
 												
-										b2Vec2( (-sprite.getHWidth() + padding ) / slge::PTM_RATIO,
-													( sprite.getHHeight() - padding) / slge::PTM_RATIO 
+										b2Vec2( -(sprite.getHWidth()) / slge::PTM_RATIO,
+													(sprite.getHHeight() - 12) / slge::PTM_RATIO 
 												),
-										b2Vec2( 0.f, ( -sprite.getHHeight() + padding ) / slge::PTM_RATIO )
+										b2Vec2( 0.f, ( -sprite.getHHeight() + 12) / slge::PTM_RATIO )
 										};
 				actorShape.Set( verts, 3 );
-				//actorShape.SetAsBox(	( sprite.getHWidth() - padding ) / slge::PTM_RATIO, 
-				//							( sprite.getHHeight() - ( padding << 1 ) ) / slge::PTM_RATIO );
 				fixtureDef.shape = &actorShape;
 				fixtureDef.density = 1.0f;
 				fixtureDef.restitution = 0.f;
@@ -152,7 +149,6 @@ class Player : public slge::Entity
 		float wobbleChange;
 		float yVel;
 		bool gameStarted;
-		unsigned padding;
 		slge::Texture2 playerTexture;
 		slge::AnimatedSprite sprite;
 		slge::SpatialComponent spatial;

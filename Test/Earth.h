@@ -22,7 +22,7 @@ class SplashScreen : public Scene
 	public:
 		SplashScreen()
 			:	proggyTexter( FontRef( "ProggySquare.ttf" ) ),
-				background( ImageRef("FUCKYOUIMAREALIMAGE.png") ),
+				background( ImageRef("bg.png") ),
 				splash( background ),
 				bgPos( CENTER_X, CENTER_Y ),
 				newGame( Label( proggyTexter, "PRESS - UP : PRESS - DOWN", glm::vec2( CENTER_X, 10.f ), Color::orange ), 10.f )
@@ -44,12 +44,12 @@ class SplashScreen : public Scene
 
 		void doDraw()
 		{
-			//glPushMatrix();
-			//glTranslatef( bgPos.getX(), bgPos.getY(), 0.f );
-			//splash.draw();
-			//glPopMatrix();
-			proggyTexter.immediateDrawString( "FPS: " + App::getFPS(), vec2( 1.f, 11.f ) );
-			newGame.draw();
+			glPushMatrix();
+			glTranslatef( bgPos.getX(), bgPos.getY(), 0.f );
+			splash.draw();
+			glPopMatrix();
+			//proggyTexter.immediateDrawString( "FPS: " + App::getFPS(), vec2( 1.f, 11.f ) );
+			//newGame.draw();
 		}
 
 	private:

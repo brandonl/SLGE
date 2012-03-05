@@ -61,7 +61,9 @@ class Terrain : public slge::Entity
 				step(step),
 				yPos( yPos ),
 				hasGameStarted(false),
-				physicsVel( 50.f * slge::DELTA_TIMEF )
+				physicsVel( 100.f * slge::DELTA_TIMEF ),
+				lastUpdate( 0.0 ),
+				terrainModifier(250)
 		{
 		}
 
@@ -78,7 +80,7 @@ class Terrain : public slge::Entity
 				// Whereas Terrain 2 Buffer is centered at WindowWidth, 0, Since we want the terrain generation
 				// to match up we supply T2 with the same x values as T1 offset by window window since that's its center.
 				// It's y values however are calculated as if x were starting at WindowWidth.
-				terrainBuffer2.push_back( b2Vec2	( ix / slge::PTM_RATIO, 
+				terrainBuffer2.push_back( b2Vec2	( ( ix ) / slge::PTM_RATIO, 
 															length * sin( jx * slge::DEG2RAD ) / slge::PTM_RATIO ) );
 
 			}
@@ -108,13 +110,18 @@ class Terrain : public slge::Entity
 			const b2Vec2 *verts = chain->m_vertices;
 			b2Vec2 v1 = b2Mul( leftTerrain->getBody()->GetTransform(), verts[0] );
 			float yDraw = static_cast<float>( slge::Window::getHeight() );
+
+			// Flip drawing for terrain drawn above player.
 			if( yPos <= CENTER_Y )
 				yDraw = 0.f;
-			glColor4f( 0.58f, .41f, .20f, 1.0f );
+			glColor4f( 0.058f, .058f, .058f, 1.0f );
 			for( unsigned i = 1; i < count; ++i )
 			{
 				glBegin( GL_QUADS );
 				b2Vec2 v2 = b2Mul( leftTerrain->getBody()->GetTransform(), verts[i] );
+				//Push over to avoid something similar to Z-fighting.
+				if( i == count - 1 )
+					v2.x += 1.0f;
 				glVertex2f( v1.x * slge::PTM_RATIO, yDraw );
 				glVertex2f( v1.x * slge::PTM_RATIO, v1.y * slge::PTM_RATIO );
 				glVertex2f( v2.x * slge::PTM_RATIO, v2.y * slge::PTM_RATIO );
@@ -127,7 +134,8 @@ class Terrain : public slge::Entity
 			count = chain->m_count;
 			verts = chain->m_vertices;
 			v1 = b2Mul( rightTerrain->getBody()->GetTransform(), verts[0] );
-			glColor4f( 0.58f, .41f, .20f, 1.0f );
+			//Push over to avoid something similar to Z-fighting.
+			v1.x -= 1.0f;
 			for( unsigned i = 1; i < count; ++i )
 			{
 				glBegin( GL_QUADS );
@@ -151,7 +159,7 @@ class Terrain : public slge::Entity
 			terrainBuffer.reserve( slge::Window::getWidth() / step );
 			for( size_t ix = 0, jx = slge::Window::getWidth() * 2.f; ix <= slge::Window::getWidth(); ix += step, jx += step )
 				terrainBuffer.push_back( b2Vec2( ix / slge::PTM_RATIO, 
-															length * sin( jx * slge::DEG2RAD )  / slge::PTM_RATIO ) );
+															length * rand() % terrainModifier * sin( jx * slge::DEG2RAD )  / slge::PTM_RATIO ) );
 
 			b2FixtureDef terrainFixture;
 			b2ChainShape polyChain1;
@@ -166,22 +174,36 @@ class Terrain : public slge::Entity
 
 		void doUpdate() 
 		{
-			b2Vec2 leftPos = leftTerrain->getBody()->GetWorldCenter();
-			b2Vec2 rightPos = rightTerrain->getBody()->GetWorldCenter();
-
-			leftTerrain->getBody()->SetTransform( b2Vec2( ( (	leftPos.x * slge::PTM_RATIO ) - physicsVel ) / slge::PTM_RATIO, leftPos.y ), 
-						  														leftTerrain->getBody()->GetAngle() );
-			rightTerrain->getBody()->SetTransform( b2Vec2( ( ( rightPos.x * slge::PTM_RATIO ) - physicsVel ) / slge::PTM_RATIO, rightPos.y ), 
-																				rightTerrain->getBody()->GetAngle() );
-
-			// Once rightTerrains's point is 1 step form 0 re generate new terrain for leftTerrain starting at WindowsWidth
-			if( rightPos.x * slge::PTM_RATIO <= 0.f )
+			if( hasGameStarted )
 			{
-				// Generates terrain for the current leftTerrain moves it to the right
-				generateTerrain();
-				std::swap( leftTerrain, rightTerrain );
-			}
+				double tick = slge::Window::tick();
+				// Every 15 seconds update speed of terrain.
+				if( tick - lastUpdate >= 15.0 )
+				{
+					physicsVel += 50.f * slge::DELTA_TIMEF;
+					lastUpdate = tick;
+				}
+				if( tick - lastUpdate >= 15.0 )
+				{
+					physicsVel += 50.f * slge::DELTA_TIMEF;
+					lastUpdate = tick;
+				}
+				b2Vec2 leftPos = leftTerrain->getBody()->GetWorldCenter();
+				b2Vec2 rightPos = rightTerrain->getBody()->GetWorldCenter();
 
+				leftTerrain->getBody()->SetTransform( b2Vec2( ( (	leftPos.x * slge::PTM_RATIO ) - physicsVel ) / slge::PTM_RATIO, leftPos.y ), 
+						  															leftTerrain->getBody()->GetAngle() );
+				rightTerrain->getBody()->SetTransform( b2Vec2( ( ( rightPos.x * slge::PTM_RATIO ) - physicsVel ) / slge::PTM_RATIO, rightPos.y ), 
+																					rightTerrain->getBody()->GetAngle() );
+
+				// Once rightTerrains's point is 1 step form 0 re generate new terrain for leftTerrain starting at WindowsWidth
+				if( rightPos.x * slge::PTM_RATIO <= 0.f )
+				{
+					// Generates terrain for the current leftTerrain moves it to the right
+					generateTerrain();
+					leftTerrain.swap( rightTerrain );
+				}
+			}
 			if( slge::Input::isKeyHeld( slge::Input::UP ) )
 			{
 				// Begin random terrain generation no more sinewave
@@ -196,6 +218,8 @@ class Terrain : public slge::Entity
 		float yPos;
 		bool hasGameStarted;
 		float physicsVel;
+		double lastUpdate;
+		unsigned terrainModifier;
 		std::unique_ptr< slge::PhysicsComponent > rightTerrain;
 		std::unique_ptr< slge::PhysicsComponent > leftTerrain;
 };
