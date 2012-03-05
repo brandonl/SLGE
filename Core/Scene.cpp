@@ -40,7 +40,7 @@ void Scene::baseUpdate()
 {
 	std::for_each( entities.begin(), entities.end(),
 						[]( std::unique_ptr<Entity>& e ){ e->update(); } );
-	stage.Step( DELTA_TIMEF, 8, 3 );
+	stage.Step( DELTA_TIMEF, 6, 3 );
 	stage.ClearForces();
 }
 

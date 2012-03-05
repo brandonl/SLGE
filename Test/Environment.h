@@ -93,7 +93,7 @@ class Terrain : public slge::Entity
 			leftTerrain.reset( new slge::PhysicsComponent( terrainBody ) );
 			leftTerrain->getBody()->CreateFixture( &terrainFixture );
 
-			terrainBody.position.Set( 480.f / slge::PTM_RATIO, yPos / slge::PTM_RATIO );
+			terrainBody.position.Set( slge::Window::getWidth() / slge::PTM_RATIO, yPos / slge::PTM_RATIO );
 			b2ChainShape polyChain2;
 			polyChain2.CreateChain( &terrainBuffer2[0], terrainBuffer2.size() );
 			terrainFixture.shape = &polyChain2;
@@ -103,21 +103,59 @@ class Terrain : public slge::Entity
 
 		void doDraw() const 
 		{
+			b2ChainShape *chain = static_cast<b2ChainShape*>( leftTerrain->getBody()->GetFixtureList()->GetShape() );
+			unsigned count = chain->m_count;
+			const b2Vec2 *verts = chain->m_vertices;
+			b2Vec2 v1 = b2Mul( leftTerrain->getBody()->GetTransform(), verts[0] );
+			float yDraw = static_cast<float>( slge::Window::getHeight() );
+			if( yPos <= CENTER_Y )
+				yDraw = 0.f;
+			glColor4f( 0.58f, .41f, .20f, 1.0f );
+			for( unsigned i = 1; i < count; ++i )
+			{
+				glBegin( GL_QUADS );
+				b2Vec2 v2 = b2Mul( leftTerrain->getBody()->GetTransform(), verts[i] );
+				glVertex2f( v1.x * slge::PTM_RATIO, yDraw );
+				glVertex2f( v1.x * slge::PTM_RATIO, v1.y * slge::PTM_RATIO );
+				glVertex2f( v2.x * slge::PTM_RATIO, v2.y * slge::PTM_RATIO );
+				glVertex2f( v2.x * slge::PTM_RATIO, yDraw );
+				glEnd();
+				v1 = v2;
+			}
+
+			chain = static_cast<b2ChainShape*>( rightTerrain->getBody()->GetFixtureList()->GetShape() );
+			count = chain->m_count;
+			verts = chain->m_vertices;
+			v1 = b2Mul( rightTerrain->getBody()->GetTransform(), verts[0] );
+			glColor4f( 0.58f, .41f, .20f, 1.0f );
+			for( unsigned i = 1; i < count; ++i )
+			{
+				glBegin( GL_QUADS );
+				b2Vec2 v2 = b2Mul( rightTerrain->getBody()->GetTransform(), verts[i] );
+				glVertex2f( v1.x * slge::PTM_RATIO, yDraw );
+				glVertex2f( v1.x * slge::PTM_RATIO, v1.y * slge::PTM_RATIO );
+				glVertex2f( v2.x * slge::PTM_RATIO, v2.y * slge::PTM_RATIO );
+				glVertex2f( v2.x * slge::PTM_RATIO, yDraw );
+				glEnd();
+				v1 = v2;
+			}
+			glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
 		}
 
 		void generateTerrain()
 		{
-			leftTerrain->getBody()->SetTransform( b2Vec2( 480.f / slge::PTM_RATIO, leftTerrain->getBody()->GetWorldCenter().y ), 
+			leftTerrain->getBody()->SetTransform( b2Vec2( slge::Window::getWidth() / slge::PTM_RATIO, leftTerrain->getBody()->GetWorldCenter().y ), 
 																		leftTerrain->getBody()->GetAngle() );
 
 			std::vector< b2Vec2 > terrainBuffer;
+			terrainBuffer.reserve( slge::Window::getWidth() / step );
 			for( size_t ix = 0, jx = slge::Window::getWidth() * 2.f; ix <= slge::Window::getWidth(); ix += step, jx += step )
-				terrainBuffer.push_back( b2Vec2	( ix / slge::PTM_RATIO, 
+				terrainBuffer.push_back( b2Vec2( ix / slge::PTM_RATIO, 
 															length * sin( jx * slge::DEG2RAD )  / slge::PTM_RATIO ) );
 
 			b2FixtureDef terrainFixture;
 			b2ChainShape polyChain1;
-			printf( "Terrain size: %u.\n", terrainBuffer.size() );
+
 			polyChain1.CreateChain( &terrainBuffer[0], terrainBuffer.size() );
 			terrainFixture.shape = &polyChain1;
 			// This thing better have only 1 Fixture.
@@ -131,10 +169,10 @@ class Terrain : public slge::Entity
 			b2Vec2 leftPos = leftTerrain->getBody()->GetWorldCenter();
 			b2Vec2 rightPos = rightTerrain->getBody()->GetWorldCenter();
 
-			leftTerrain->getBody()->SetTransform( b2Vec2( ( ( leftPos.x * slge::PTM_RATIO ) - physicsVel ) / slge::PTM_RATIO, leftPos.y ), 
-						  													 leftTerrain->getBody()->GetAngle() );
+			leftTerrain->getBody()->SetTransform( b2Vec2( ( (	leftPos.x * slge::PTM_RATIO ) - physicsVel ) / slge::PTM_RATIO, leftPos.y ), 
+						  														leftTerrain->getBody()->GetAngle() );
 			rightTerrain->getBody()->SetTransform( b2Vec2( ( ( rightPos.x * slge::PTM_RATIO ) - physicsVel ) / slge::PTM_RATIO, rightPos.y ), 
-																		  rightTerrain->getBody()->GetAngle() );
+																				rightTerrain->getBody()->GetAngle() );
 
 			// Once rightTerrains's point is 1 step form 0 re generate new terrain for leftTerrain starting at WindowsWidth
 			if( rightPos.x * slge::PTM_RATIO <= 0.f )
@@ -142,6 +180,12 @@ class Terrain : public slge::Entity
 				// Generates terrain for the current leftTerrain moves it to the right
 				generateTerrain();
 				std::swap( leftTerrain, rightTerrain );
+			}
+
+			if( slge::Input::isKeyHeld( slge::Input::UP ) )
+			{
+				// Begin random terrain generation no more sinewave
+				hasGameStarted = true;
 			}
 		}
 

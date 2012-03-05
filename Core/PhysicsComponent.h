@@ -5,7 +5,6 @@
 #include "Settings.h"
 #include "SpatialComponent.h"
 
-//TODO: This is temporary hack of class.
 namespace slge
 {
 	class PhysicsComponent

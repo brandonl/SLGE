@@ -39,6 +39,7 @@ namespace slge
 			void			baseDraw();
 
 			unsigned		entityIdCounter;
+			// Still logically const
 			mutable		b2World		stage;
 			unsigned		drawLayer;
 			DebugDraw	debugDraw;

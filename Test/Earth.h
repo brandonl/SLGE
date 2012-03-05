@@ -25,11 +25,11 @@ class SplashScreen : public Scene
 				background( ImageRef("FUCKYOUIMAREALIMAGE.png") ),
 				splash( background ),
 				bgPos( CENTER_X, CENTER_Y ),
-				newGame( Label( proggyTexter, "I ' M A B U T T O N", WINDOW_CENTER, Color::orange ), 10.f )
+				newGame( Label( proggyTexter, "PRESS - UP : PRESS - DOWN", glm::vec2( CENTER_X, 10.f ), Color::orange ), 10.f )
 		{
 			add( new Player() );
-			add( new Terrain( 50, 45.f, 20.f, 101.f ) );
-			add( new Terrain( 50, 45.f, 20.f, 539.f ) );
+			add( new Terrain( 50, 45.f, 20.f, 100.f ) );
+			add( new Terrain( 50, 45.f, 20.f, 700.f ) );
 		}
 
 	private:

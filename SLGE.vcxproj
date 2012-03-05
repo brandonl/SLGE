@@ -89,6 +89,7 @@
     <ClCompile Include="Core\Actor.cpp" />
     <ClCompile Include="Core\App.cpp" />
     <ClCompile Include="Core\Color.cpp" />
+    <ClCompile Include="Core\Entity.cpp" />
     <ClCompile Include="Core\Font.cpp" />
     <ClCompile Include="Core\Image.cpp" />
     <ClCompile Include="Core\Input.cpp" />

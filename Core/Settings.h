@@ -16,9 +16,9 @@ namespace slge
 	const double			DELTA_TIME = 1.0/ FIXED_UPDATE_SPEED;
 	const float				DELTA_TIMEF = 1.f / FIXED_UPDATE_SPEEDF;
 	const float				PTM_RATIO = 32.f;
-	const float				SLGE_GRAVITY = 15.f;
-	const unsigned			INIT_WINDOW_WIDTH = 480u;
-	const unsigned			INIT_WINDOW_HEIGHT = 640u;
+	const float				SLGE_GRAVITY = 18.f;
+	const unsigned			INIT_WINDOW_WIDTH = 800u;
+	const unsigned			INIT_WINDOW_HEIGHT = 800u;
 
 	const float				TTF_DEFAULT_PIXEL_HEIGHT = 11.f;
 	const int				TTF_FONT_WIDTH = 512;

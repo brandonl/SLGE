@@ -78,6 +78,9 @@
     <ClCompile Include="Core\Sprite.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Entity.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\App.h">

@@ -19,7 +19,16 @@ class Player : public slge::Entity
 			:	slge::Entity( "Player" ),
 				playerTexture( slge::ImageRef( "ITSP.png" ) ),
 				sprite( playerTexture ),
-				spatial( static_cast<float>( CENTER_X ), static_cast<float>( CENTER_Y ) )
+				spatial( static_cast<float>( CENTER_X ), static_cast<float>( CENTER_Y ) ),
+				runTime( 0.f ),
+				balanced(true),
+				desiredAngle(10.f),
+				upChange(0.5f * slge::DEG2RAD),
+				downChange(-0.5f * slge::DEG2RAD),
+				wobbleChange(0.2f * slge::DEG2RAD),
+				yVel( -150.f ),
+				gameStarted(false),
+				padding(6)
 		{
 				//sprite.add( "Stand", 0, 0, 0, 0.0f );
 				//sprite.add( "Run", 0, 3, 0, 12.0f );
@@ -33,47 +42,93 @@ class Player : public slge::Entity
 				b2BodyDef bDef;
 				bDef.type = b2_dynamicBody;
 				bDef.userData = this;
-				bDef.allowSleep = false;
+				bDef.allowSleep = true;
+				bDef.awake = false;
+			//	spatial.setY( spatial.getY()  );
 				bDef.position.Set(	spatial.getX() / slge::PTM_RATIO,
 											spatial.getY() / slge::PTM_RATIO );
 				bDef.angle = 0;
 				physicalBody = slge::PhysicsComponent( bDef, &spatial );
 			
 				b2FixtureDef fixtureDef;
-				b2PolygonShape actorBox;
-
-				actorBox.SetAsBox( ( sprite.getHWidth() ) / slge::PTM_RATIO, 
-											sprite.getHHeight() / slge::PTM_RATIO );
-				fixtureDef.shape = &actorBox;
+				b2PolygonShape actorShape;
+				b2Vec2 verts[] = { b2Vec2( ( sprite.getHWidth() - padding ) / slge::PTM_RATIO,
+													( sprite.getHHeight() - padding ) / slge::PTM_RATIO 
+												),
+												
+										b2Vec2( (-sprite.getHWidth() + padding ) / slge::PTM_RATIO,
+													( sprite.getHHeight() - padding) / slge::PTM_RATIO 
+												),
+										b2Vec2( 0.f, ( -sprite.getHHeight() + padding ) / slge::PTM_RATIO )
+										};
+				actorShape.Set( verts, 3 );
+				//actorShape.SetAsBox(	( sprite.getHWidth() - padding ) / slge::PTM_RATIO, 
+				//							( sprite.getHHeight() - ( padding << 1 ) ) / slge::PTM_RATIO );
+				fixtureDef.shape = &actorShape;
 				fixtureDef.density = 1.0f;
 				fixtureDef.restitution = 0.f;
 
-				physicalBody.getBody()->CreateFixture( &fixtureDef );
-				physicalBody.getBody()->SetFixedRotation(true);
+				// Change linear Dampaning as a perk allows you to be more floaty
+				// or change gravity on the body...
+				//physicalBody.getBody()->SetLinearDamping( 1.f );
+				//physicalBody.getBody()->SetGravityScale( 0.5f );
+
+				body()->CreateFixture( &fixtureDef );
+				body()->SetFixedRotation(true);
 		}
 
 		void doUpdate()
 		{
-			sprite.update();
-			physicalBody.update();
-
-			b2Vec2 vel = body()->GetLinearVelocity();
-			float bodyAngle = body()->GetAngle();
-			float desiredAngle = 15.f;
-         float change = 1 * slge::DEG2RAD;
-
-			if( slge::Input::isKeyHeld( slge::Input::UP ) && vel.y >= -10.f )
+			if( gameStarted )
 			{
-				if( bodyAngle <= desiredAngle * slge::DEG2RAD )
-					body()->SetTransform( body()->GetPosition(), bodyAngle + change );
-				body()->ApplyForce( b2Vec2(0,-200), body()->GetWorldCenter() );
+				sprite.update();
+				physicalBody.update();
+
+				b2Vec2 vel = body()->GetLinearVelocity();
+				float bodyAngle = body()->GetAngle();
+
+				if( slge::Input::isKeyHeld( slge::Input::UP ) )
+				{
+					if( bodyAngle < desiredAngle * slge::DEG2RAD )
+						body()->SetTransform( body()->GetPosition(), bodyAngle + upChange );
+					body()->ApplyForce( b2Vec2(0.f, yVel ), body()->GetWorldCenter() );
+					balanced = false;
+				}
+				else if( slge::Input::isKeyHeld( slge::Input::DOWN ) )
+				{
+					if( bodyAngle > -desiredAngle * slge::DEG2RAD )
+						body()->SetTransform( body()->GetPosition(), bodyAngle - upChange );
+					body()->ApplyForce( b2Vec2(0.f, -yVel ), body()->GetWorldCenter() );
+					balanced = false;
+				}
+				else
+				{
+					if( !balanced )
+					{
+						if( bodyAngle > 0.f )
+							body()->SetTransform( body()->GetPosition(), bodyAngle + downChange );
+						else
+							balanced = true;
+					}
+					else
+					{
+						if( sin( runTime * slge::DEG2RAD ) < 0.f )
+							body()->SetTransform( body()->GetPosition(), bodyAngle + wobbleChange );
+						else
+							body()->SetTransform( body()->GetPosition(), bodyAngle - wobbleChange );
+					}
+					runTime += 4.f;
+				}
+				body()->SetLinearVelocity( b2Vec2( 0.f, vel.y ) );
 			}
 			else
 			{
-				if( bodyAngle > 0.001f )
-					body()->SetTransform( body()->GetPosition(), bodyAngle - change );
+				if( slge::Input::isKeyHeld( slge::Input::UP ) )
+				{
+					body()->SetAwake( true );
+					gameStarted = true;
+				}
 			}
-			body()->SetLinearVelocity( b2Vec2( 0.f, vel.y ) );
 		}
 
 		void doDraw() const
@@ -89,7 +144,15 @@ class Player : public slge::Entity
 	private:
 		b2Body *body()
 		{ return physicalBody.getBody(); }
-
+		float runTime;
+		bool balanced;
+		float desiredAngle;
+		float upChange;
+		float downChange;
+		float wobbleChange;
+		float yVel;
+		bool gameStarted;
+		unsigned padding;
 		slge::Texture2 playerTexture;
 		slge::AnimatedSprite sprite;
 		slge::SpatialComponent spatial;

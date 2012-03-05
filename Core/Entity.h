@@ -2,51 +2,22 @@
 #define ENTITY_H
 
 #include <string>
-#include <cstdio>
 #include <Box2D.h>
 
 namespace slge
 {
+	class Scene;
 	class Entity // : public Node
 	{
 		public:
-			explicit Entity( const std::string groupName = "", Scene *parent = nullptr ) 
-				:  group(groupName), 
-					condemned(false),
-					parent(parent)
-			{
-				printf( "Create entity: %s\n", group.c_str() );
-			}
+			explicit Entity( const std::string &groupName = "", Scene *parent = nullptr );
+			virtual ~Entity(){}
 
-			virtual ~Entity() 
-			{ 
-				printf( "Destroying entity: %s\n", group.c_str() );
-			}
-
-			void load()
-			{
-				doLoad();
-			}
-
-			void update()
-			{
-				doUpdate();
-			}
-
-			void draw() const
-			{
-				doDraw();
-			}
-
-			void setParent( const Scene *p )
-			{
-				parent = p;
-			}
-
-			const Scene* getParent() const
-			{
-				return parent;
-			}
+			void load();
+			void update();
+			void draw() const;
+			void setParent( const Scene *p );
+			const Scene* getParent() const;
 
 		private:
 			virtual void doLoad() = 0;
