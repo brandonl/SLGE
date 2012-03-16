@@ -30,7 +30,8 @@ namespace slge
 
 		private:
 			virtual void doUpdate() = 0;
-			virtual void doDraw() = 0;
+			virtual void preDraw() = 0;
+			virtual void postDraw() = 0;
 			virtual void doLoadGameEntities() = 0;
 
 		private:
@@ -67,12 +68,13 @@ namespace slge
 
 	inline void Scene::draw()
 	{
-		doDraw();
-#ifdef NDEBUG
+		preDraw();
+//#ifdef NDEBUG
 		if( drawLayer == debug )
-#endif
+//#endif
 			stage.DrawDebugData();
 		baseDraw();
+		postDraw();
 	}
 
 	inline b2Body* Scene::createBody( const b2BodyDef &bodyDef ) const

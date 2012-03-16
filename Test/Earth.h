@@ -42,14 +42,19 @@ class SplashScreen : public Scene
 			if( newGame.update() ) printf( "CLICKED.\n" );
 		}
 
-		void doDraw()
+		void preDraw()
 		{
+			//Create spatial component get rid of gl calls.
 			glPushMatrix();
 			glTranslatef( bgPos.getX(), bgPos.getY(), 0.f );
 			splash.draw();
 			glPopMatrix();
-			//proggyTexter.immediateDrawString( "FPS: " + App::getFPS(), vec2( 1.f, 11.f ) );
-			//newGame.draw();
+		}
+
+		void postDraw()
+		{
+			proggyTexter.immediateDrawString( "FPS: " + App::getFPS(), vec2( 1.f, 11.f ) );
+			newGame.draw();
 		}
 
 	private:
