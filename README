@@ -1,0 +1,4 @@
+A time ago I stumbled across Ludum Dare where users particpate in 48 hour 'game jams' a while and decided to write my own small game engine in order to compete in such 'compos'. The goal of the project was an engine I could use to quickly make small 2D games. Because of this specification it uses the older and deprecated, fixed function pipeline in OpenGL.
+
+The engine utilizes Box2D, OpenGL, and GLFW and was written in C++11-ish.
+
